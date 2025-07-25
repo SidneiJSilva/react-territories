@@ -43,9 +43,7 @@ function App({ children }: AppProps) {
 							<Typography variant="h6">{data.territoryarea}</Typography>
 							<Typography variant="body2" sx={{ mt: 1 }}>
 								{/* Exemplo de detalhes */}
-								Status: {data.assignments[0]["people-id"]} <br />
-								Descrição: {data.firstname || "Sem descrição"} <br />
-								Última atualização: {data.assignedat || "Desconhecida"}
+								LINK: {data.link || "Sem link"} <br />
 							</Typography>
 						</>
 					) : (
