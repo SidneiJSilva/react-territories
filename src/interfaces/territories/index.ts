@@ -1,33 +1,23 @@
-export interface People {
-	id: number;
-	"first-name": string;
-	"last-name": string;
-}
-
-export interface Assignment {
-	"assigned-at": string;
-	"people-id": number;
-	"returned-at": string;
-	"territories-people": People[];
-	"territory-id": number;
-}
-
-export interface TerritoryArea {
-	label: string;
-}
-
-export interface TerritoryType {
-	label: string;
-}
-
 export interface TerritoryInterface {
 	id: number;
-	number: string;
-	link: string;
+	number: number;
+	territoryarea: string;
+	territorytype: string;
+	link: string | null;
 	synced: boolean;
-	assignments: Assignment[];
-	boundaries: string[];
+	boundaries: string[] | null;
 
-	"territory-area": TerritoryArea;
-	"territory-type": TerritoryType;
+	// Last assignment details
+	assignedat: string | null;
+	returnedat: string | null;
+
+	// People details
+	peopleid: number | null;
+	firstname: string | null;
+	lastname: string | null;
+
+	// Status and delay information
+	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
+	daystodelay: number | null;
+	delayedbydays: number | null;
 }

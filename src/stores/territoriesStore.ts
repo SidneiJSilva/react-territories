@@ -1,9 +1,18 @@
-// src/stores/territoriesStore.ts
 import { create } from "zustand";
 import { type TerritoryInterface } from "@/interfaces";
 
-export const territoriesStore = create((set) => ({
-	territories: [] as TerritoryInterface[],
+interface TerritoriesStore {
+	territories: TerritoryInterface[];
+	groupedTerritories: Record<string, TerritoryInterface[]>;
 
-	setTerritories: (territories: TerritoryInterface[]) => set({ territories }),
+	setTerritories: (territories: TerritoryInterface[]) => void;
+	setGroupedTerritories: (groups: Record<string, TerritoryInterface[]>) => void;
+}
+
+export const territoriesStore = create<TerritoriesStore>((set) => ({
+	territories: [],
+	groupedTerritories: {},
+
+	setTerritories: (territories) => set({ territories }),
+	setGroupedTerritories: (groups) => set({ groupedTerritories: groups }),
 }));

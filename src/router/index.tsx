@@ -1,4 +1,4 @@
-import Territories from "@/pages/Territories";
+import Territories from "@/pages/territories/Territories";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import App from "@/App";
 
