@@ -1,13 +1,58 @@
 import { TerritoriesService } from "@/services";
 import { territoriesStore } from "@/stores/territoriesStore";
-import { type TerritoryInterface } from "@/interfaces";
+import {
+	type TerritoryInterface,
+	type GroupedTerritoryArea,
+} from "@/interfaces";
+import { useDialogStore } from "@/stores/dialogStore";
+
+type TerritoryStatus = TerritoryInterface["status"];
 
 export const useTerritories = () => {
-	const { setTerritories, setGroupedTerritories } = territoriesStore() as {
-		setTerritories: (territories: TerritoryInterface[]) => void;
-		setGroupedTerritories: (
-			groups: Record<string, TerritoryInterface[]>
-		) => void;
+	const { setTerritories, setGroupedTerritories } = territoriesStore();
+
+	const STATUSES: TerritoryStatus[] = [
+		"assigned",
+		"resting",
+		"delayed",
+		"delayed_soon",
+		"available",
+	];
+
+	interface GroupedTerritoriesAccumulator {
+		[area: string]: GroupedTerritoryArea;
+	}
+
+	const groupTerritories = (
+		territories: TerritoryInterface[]
+	): GroupedTerritoriesAccumulator => {
+		return territories.reduce<GroupedTerritoriesAccumulator>(
+			(acc, territory) => {
+				const isComercial: boolean = territory.territorytype === "Comercial";
+				const area: string = isComercial
+					? "Comercial"
+					: territory.territoryarea || "Sem área";
+
+				if (!acc[area]) {
+					const initialStats: Record<TerritoryStatus, number> = STATUSES.reduce(
+						(stats, status) => ({ ...stats, [status]: 0 }),
+						{} as Record<TerritoryStatus, number>
+					);
+
+					acc[area] = {
+						area,
+						stats: initialStats,
+						territories: [],
+					};
+				}
+
+				acc[area].territories.push(territory);
+				acc[area].stats[territory.status] += 1;
+
+				return acc;
+			},
+			{} as GroupedTerritoriesAccumulator
+		);
 	};
 
 	const fetchTerritories = async () => {
@@ -16,26 +61,33 @@ export const useTerritories = () => {
 
 			setTerritories(territories);
 
-			const groupedByArea = territories.reduce((acc, territory) => {
-				const isComercial = territory.territorytype === "Comercial";
-				const area = isComercial
-					? "Comercial"
-					: territory.territoryarea || "Sem área";
+			const groupedMap = groupTerritories(territories);
 
-				if (!acc[area]) acc[area] = [];
-				acc[area].push(territory);
+			const groupedByAreaWithStats = Object.values(
+				groupedMap
+			) as GroupedTerritoryArea[];
 
-				return acc;
-			}, {} as Record<string, TerritoryInterface[]>);
+			console.log("Grouped Territories with Stats:", groupedByAreaWithStats);
 
-			console.log("Grouped Territories:", groupedByArea);
-
-			setGroupedTerritories(groupedByArea);
+			setGroupedTerritories(groupedByAreaWithStats);
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);
 			throw error;
 		}
 	};
 
-	return { fetchTerritories };
+	const openDialog = useDialogStore((state) => state.openDialog);
+
+	const fetchTerritoryDetails = async (id: number) => {
+		try {
+			const territory = await TerritoriesService.fetchTerritoryDetails(id);
+
+			openDialog(territory);
+		} catch (error) {
+			console.error("Failed to fetch territory details:", error);
+			throw error;
+		}
+	};
+
+	return { fetchTerritories, fetchTerritoryDetails };
 };

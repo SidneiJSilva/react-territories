@@ -21,3 +21,9 @@ export interface TerritoryInterface {
 	daystodelay: number | null;
 	delayedbydays: number | null;
 }
+
+export interface GroupedTerritoryArea {
+	area: string;
+	stats: Record<TerritoryInterface["status"], number>;
+	territories: TerritoryInterface[];
+}

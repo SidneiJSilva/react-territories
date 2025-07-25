@@ -4,6 +4,7 @@ import { TerritoryFooter } from "@/components/molecules/TerritoryFooter";
 
 import { type TerritoryInterface } from "@/interfaces";
 import { statusColors } from "@/constants/colors";
+import { useTerritories } from "@/hooks";
 
 export default function TerritoryListItem({
 	territory,
@@ -11,6 +12,12 @@ export default function TerritoryListItem({
 	territory: TerritoryInterface;
 }) {
 	const isDarkText = territory.status === "delayed_soon";
+
+	const { fetchTerritoryDetails } = useTerritories();
+
+	const handleClick = async () => {
+		await fetchTerritoryDetails(territory.id);
+	};
 
 	return (
 		<SCard
@@ -31,21 +38,23 @@ export default function TerritoryListItem({
 				borderRadius: "1rem",
 			}}
 		>
-			<TerritoryHeader
-				firstname={territory.firstname ?? undefined}
-				lastname={territory.lastname ?? undefined}
-				synced={territory.synced}
-				status={territory.status}
-			/>
+			<div onClick={handleClick} style={{ cursor: "pointer" }}>
+				<TerritoryHeader
+					firstname={territory.firstname ?? undefined}
+					lastname={territory.lastname ?? undefined}
+					synced={territory.synced}
+					status={territory.status}
+				/>
 
-			<TerritoryFooter
-				status={territory.status}
-				delayedbydays={territory.delayedbydays ?? undefined}
-				daystodelay={territory.daystodelay ?? undefined}
-				number={territory.number}
-				link={territory.link ?? undefined}
-				isDarkText={isDarkText}
-			/>
+				<TerritoryFooter
+					status={territory.status}
+					delayedbydays={territory.delayedbydays ?? undefined}
+					daystodelay={territory.daystodelay ?? undefined}
+					number={territory.number}
+					link={territory.link ?? undefined}
+					isDarkText={isDarkText}
+				/>
+			</div>
 		</SCard>
 	);
 }
