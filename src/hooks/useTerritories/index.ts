@@ -9,7 +9,8 @@ import { useDialogStore } from "@/stores/dialogStore";
 type TerritoryStatus = TerritoryInterface["status"];
 
 export const useTerritories = () => {
-	const { setTerritories, setGroupedTerritories } = territoriesStore();
+	const { setTerritories, setGroupedTerritories, setIsFetchingTerritories } =
+		territoriesStore();
 
 	const STATUSES: TerritoryStatus[] = [
 		"assigned",
@@ -56,6 +57,8 @@ export const useTerritories = () => {
 	};
 
 	const fetchTerritories = async () => {
+		setIsFetchingTerritories(true);
+
 		try {
 			const territories = await TerritoriesService.fetchTerritories();
 
@@ -73,6 +76,8 @@ export const useTerritories = () => {
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);
 			throw error;
+		} finally {
+			setIsFetchingTerritories(false);
 		}
 	};
 

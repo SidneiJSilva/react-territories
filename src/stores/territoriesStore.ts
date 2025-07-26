@@ -17,15 +17,20 @@ export interface GroupedTerritoryArea {
 interface TerritoriesStore {
 	territories: TerritoryInterface[];
 	groupedTerritories: GroupedTerritoryArea[];
+	isFetchingTerritories: boolean;
 
 	setTerritories: (territories: TerritoryInterface[]) => void;
 	setGroupedTerritories: (groups: GroupedTerritoryArea[]) => void;
+	setIsFetchingTerritories: (isFetching: boolean) => void;
 }
 
 export const territoriesStore = create<TerritoriesStore>((set) => ({
 	territories: [],
 	groupedTerritories: [],
+	isFetchingTerritories: false,
 
 	setTerritories: (territories) => set({ territories }),
 	setGroupedTerritories: (groups) => set({ groupedTerritories: groups }),
+	setIsFetchingTerritories: (isFetching: boolean) =>
+		set({ isFetchingTerritories: isFetching }),
 }));

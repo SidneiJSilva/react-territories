@@ -1,11 +1,11 @@
 // stores/dialogStore.ts
 import { create } from "zustand";
-import type { TerritoryInterface } from "@/interfaces";
+import type { TerritoryDetails } from "@/interfaces";
 
 type DialogState = {
 	open: boolean;
-	data: TerritoryInterface | null;
-	openDialog: (data: TerritoryInterface) => void;
+	data: TerritoryDetails | null;
+	openDialog: (data: TerritoryDetails) => void;
 	closeDialog: () => void;
 };
 

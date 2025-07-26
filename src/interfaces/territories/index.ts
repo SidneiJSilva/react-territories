@@ -27,3 +27,23 @@ export interface GroupedTerritoryArea {
 	stats: Record<TerritoryInterface["status"], number>;
 	territories: TerritoryInterface[];
 }
+
+export interface Assignment {
+	assignedAt: string;
+	campaign: boolean;
+	firstName: string;
+	id: number;
+	lastName: string;
+	peopleId: number;
+	returnedAt: string | null;
+}
+
+export interface TerritoryDetails {
+	assignments: Assignment[];
+	id: number;
+	link: string | null;
+	number: number;
+	synced: boolean;
+	territoryarealabel: string;
+	territorytypelabel: string;
+}
