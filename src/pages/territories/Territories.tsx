@@ -3,16 +3,18 @@ import TerritoriesList from "@/components/organisms/TerritoriesList";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
 
 import { useEffect } from "react";
-import { useTerritories } from "@/hooks";
+import { useTerritories, usePeople } from "@/hooks";
 import { territoriesStore } from "@/stores/territoriesStore";
 
 export default function Territories() {
 	const { fetchTerritories } = useTerritories();
+	const { fetchPeople } = usePeople();
 	const { isFetchingTerritories } = territoriesStore();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			await fetchTerritories();
+			await fetchPeople();
 		};
 
 		fetchData();

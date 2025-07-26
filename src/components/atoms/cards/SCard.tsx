@@ -11,11 +11,13 @@ interface SCardProps {
 	title?: string;
 	children: ReactNode;
 	sx?: SxProps;
+	onClick: () => void;
 }
 
-export default function SCard({ title, children, sx }: SCardProps) {
+export default function SCard({ title, children, sx, onClick }: SCardProps) {
 	return (
 		<Card
+			onClick={onClick}
 			elevation={3}
 			sx={{
 				borderRadius: 2,

@@ -30,4 +30,37 @@ export class TerritoriesService {
 
 		return data[0] as unknown as TerritoryDetails;
 	}
+
+	static async assignTerritory(territoryId: number, peopleId: number) {
+		const { error } = await SupabaseService.from("assignments").insert({
+			"territory-id": territoryId,
+			"people-id": peopleId,
+			"assigned-at": new Date().toISOString(),
+			campaign: false,
+		});
+
+		if (error) {
+			throw new Error(`Error assigning territory: ${error.message}`);
+		}
+	}
+
+	static async territorySync(synced: boolean, territoryId: number) {
+		const { error } = await SupabaseService.from("territories")
+			.update({ synced })
+			.eq("id", territoryId);
+
+		if (error) {
+			throw new Error(`Error assigning territory: ${error.message}`);
+		}
+	}
+
+	static async returnTerritory(assignmentId: number) {
+		const { error } = await SupabaseService.from("assignments")
+			.update({ "returned-at": new Date().toISOString() })
+			.eq("id", assignmentId);
+
+		if (error) {
+			throw new Error(`Error assigning territory: ${error.message}`);
+		}
+	}
 }

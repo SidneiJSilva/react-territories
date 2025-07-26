@@ -39,6 +39,7 @@ export interface Assignment {
 }
 
 export interface TerritoryDetails {
+	assignmentid: number;
 	assignments: Assignment[];
 	id: number;
 	link: string | null;
@@ -46,4 +47,5 @@ export interface TerritoryDetails {
 	synced: boolean;
 	territoryarealabel: string;
 	territorytypelabel: string;
+	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
 }

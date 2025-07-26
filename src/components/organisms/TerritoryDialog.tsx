@@ -1,18 +1,11 @@
 // src/components/organisms/TerritoryDialog.tsx
-
-import {
-	Box,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogActions,
-	Button,
-	Typography,
-} from "@mui/material";
+import { Dialog, DialogContent, DialogActions, Button } from "@mui/material";
 import TerritoryDialogHistory from "@/components/molecules/TerritoryDialogHistory";
+import TerritoryDialogHeader from "../molecules/TerritoryDialogHeader";
+import TerritoryReturn from "@/components/molecules/TerritoryReturn";
+import TerritoryAssign from "../molecules/TerritoryAssign";
+
 import { useDialogStore } from "@/stores/dialogStore";
-import HistoryIcon from "@mui/icons-material/History";
-import { statusColors } from "@/constants/colors";
 
 export default function TerritoryDialog() {
 	const { open, data, closeDialog } = useDialogStore();
@@ -21,41 +14,19 @@ export default function TerritoryDialog() {
 
 	return (
 		<Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>
-			<DialogTitle sx={{ backgroundColor: "gray", color: "white" }}>
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "space-between",
-					}}
-				>
-					<div>{`${data.territoryarealabel} - ${data.territorytypelabel}`}</div>
+			<TerritoryDialogHeader data={data} />
 
-					<Box
-						sx={{
-							backgroundColor: "white",
-							color: "gray",
-							width: "40px",
-							height: "40px",
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-							borderRadius: "100%",
-						}}
-					>
-						{data.number}
-					</Box>
-				</Box>
-			</DialogTitle>
-
-			<DialogContent dividers>
-				<Box sx={{ display: "flex", gap: 1, color: statusColors.assigned }}>
-					<HistoryIcon />
-
-					<Typography variant="body1" fontWeight={700}>
-						Histórico
-					</Typography>
-				</Box>
+			<DialogContent
+				sx={{ display: "flex", flexDirection: "column", gap: 4 }}
+				dividers
+			>
+				{data.status === "available" ? (
+					<TerritoryAssign data={data} />
+				) : data.status === "resting" ? (
+					<></>
+				) : (
+					<TerritoryReturn data={data} />
+				)}
 
 				<TerritoryDialogHistory assignments={data.assignments} />
 			</DialogContent>

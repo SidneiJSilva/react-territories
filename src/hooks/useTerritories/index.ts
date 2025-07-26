@@ -94,5 +94,36 @@ export const useTerritories = () => {
 		}
 	};
 
-	return { fetchTerritories, fetchTerritoryDetails };
+	const { closeDialog } = useDialogStore();
+
+	const assignTerritory = async (territoryId: number, peopleId: number) => {
+		try {
+			await TerritoriesService.assignTerritory(territoryId, peopleId);
+			await TerritoriesService.territorySync(false, territoryId);
+			closeDialog();
+			await fetchTerritories();
+		} catch (error) {
+			console.error("Failed to assign territory:", error);
+			throw error;
+		}
+	};
+
+	const returnTerritory = async (assignmentId: number, territoryId: number) => {
+		try {
+			await TerritoriesService.returnTerritory(assignmentId);
+			await TerritoriesService.territorySync(false, territoryId);
+			closeDialog();
+			await fetchTerritories();
+		} catch (error) {
+			console.error("Failed to return territory:", error);
+			throw error;
+		}
+	};
+
+	return {
+		fetchTerritories,
+		fetchTerritoryDetails,
+		assignTerritory,
+		returnTerritory,
+	};
 };
