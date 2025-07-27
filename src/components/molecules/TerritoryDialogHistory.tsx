@@ -44,49 +44,59 @@ export default function TerritoryDialogHistory({ assignments }: Props) {
 				</Typography>
 			</Box>
 
-			<TableContainer component={Paper} elevation={0}>
-				<Table size="small" aria-label="assignment history">
-					<TableHead>
-						<TableRow>
-							{headerData.map((header) => (
-								<TableCell key={header.label} sx={{ width: header.width }}>
-									<Typography variant="caption" fontWeight={700}>
-										{header.label}
-									</Typography>
-								</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-
-					<TableBody>
-						{assignments.map((assignment) => (
-							<TableRow key={assignment.id}>
-								<TableCell>
-									<Typography variant="body2">
-										{assignment.firstName} {assignment.lastName}
-									</Typography>
-								</TableCell>
-
-								<TableCell>
-									<Typography variant="body2">
-										{assignment.assignedAt
-											? format(new Date(assignment.assignedAt), "dd/MM/yyyy")
-											: "-"}
-									</Typography>
-								</TableCell>
-
-								<TableCell>
-									<Typography variant="body2">
-										{assignment.returnedAt
-											? format(new Date(assignment.returnedAt), "dd/MM/yyyy")
-											: "-"}
-									</Typography>
-								</TableCell>
+			{assignments ? (
+				<TableContainer component={Paper} elevation={0}>
+					<Table size="small" aria-label="assignment history">
+						<TableHead>
+							<TableRow>
+								{headerData.map((header) => (
+									<TableCell key={header.label} sx={{ width: header.width }}>
+										<Typography variant="caption" fontWeight={700}>
+											{header.label}
+										</Typography>
+									</TableCell>
+								))}
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</TableContainer>
+						</TableHead>
+
+						<TableBody>
+							{assignments.map((assignment) => (
+								<TableRow key={assignment.id}>
+									<TableCell>
+										<Typography variant="body2">
+											{assignment.firstName} {assignment.lastName}
+										</Typography>
+									</TableCell>
+
+									<TableCell>
+										<Typography variant="body2">
+											{assignment.assignedAt
+												? format(new Date(assignment.assignedAt), "dd/MM/yyyy")
+												: "-"}
+										</Typography>
+									</TableCell>
+
+									<TableCell>
+										<Typography variant="body2">
+											{assignment.returnedAt
+												? format(new Date(assignment.returnedAt), "dd/MM/yyyy")
+												: "-"}
+										</Typography>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			) : (
+				<Box
+					sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+				>
+					<Typography variant="body1" fontWeight={700}>
+						Sem histórico
+					</Typography>
+				</Box>
+			)}
 		</div>
 	);
 }
