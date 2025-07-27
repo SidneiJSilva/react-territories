@@ -2,16 +2,23 @@
 import { create } from "zustand";
 import type { TerritoryDetails } from "@/interfaces";
 
-type DialogState = {
-	open: boolean;
-	data: TerritoryDetails | null;
+interface DialogStoreActions {
 	openDialog: (data: TerritoryDetails) => void;
 	closeDialog: () => void;
-};
+	setData: (data: TerritoryDetails | null) => void;
+}
 
-export const useDialogStore = create<DialogState>((set) => ({
-	open: false,
-	data: null,
-	openDialog: (data) => set({ open: true, data }),
-	closeDialog: () => set({ open: false, data: null }),
-}));
+interface DialogStoreState {
+	open: boolean;
+	data: TerritoryDetails | null;
+}
+
+export const useDialogStore = create<DialogStoreState & DialogStoreActions>(
+	(set) => ({
+		open: false,
+		data: null,
+		openDialog: (data: TerritoryDetails) => set({ open: true, data }),
+		closeDialog: () => set({ open: false, data: null }),
+		setData: (data: TerritoryDetails | null) => set({ data }),
+	})
+);

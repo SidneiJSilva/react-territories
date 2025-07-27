@@ -4,6 +4,7 @@ import TerritoryDialogHistory from "@/components/molecules/TerritoryDialogHistor
 import TerritoryDialogHeader from "../molecules/TerritoryDialogHeader";
 import TerritoryReturn from "@/components/molecules/TerritoryReturn";
 import TerritoryAssign from "../molecules/TerritoryAssign";
+import TerritorySync from "../molecules/TerritorySync";
 
 import { useDialogStore } from "@/stores/dialogStore";
 
@@ -29,6 +30,8 @@ export default function TerritoryDialog() {
 				)}
 
 				<TerritoryDialogHistory assignments={data.assignments} />
+
+				{!data.synced && <TerritorySync territoryId={data.id} />}
 			</DialogContent>
 
 			<DialogActions>

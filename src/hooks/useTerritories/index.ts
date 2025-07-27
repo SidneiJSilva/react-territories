@@ -56,8 +56,8 @@ export const useTerritories = () => {
 		);
 	};
 
-	const fetchTerritories = async () => {
-		setIsFetchingTerritories(true);
+	const fetchTerritories = async (showLoading: boolean = true) => {
+		if (showLoading) setIsFetchingTerritories(true);
 
 		try {
 			const territories = await TerritoriesService.fetchTerritories();
@@ -70,38 +70,38 @@ export const useTerritories = () => {
 				groupedMap
 			) as GroupedTerritoryArea[];
 
-			console.log("Grouped Territories with Stats:", groupedByAreaWithStats);
-
 			setGroupedTerritories(groupedByAreaWithStats);
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);
 			throw error;
 		} finally {
-			setIsFetchingTerritories(false);
+			if (showLoading) setIsFetchingTerritories(false);
 		}
 	};
 
 	const openDialog = useDialogStore((state) => state.openDialog);
 
-	const fetchTerritoryDetails = async (id: number) => {
+	const { setData } = useDialogStore();
+
+	const fetchTerritoryDetails = async (id: number, update: boolean = false) => {
 		try {
 			const territory = await TerritoriesService.fetchTerritoryDetails(id);
 
-			openDialog(territory);
+			if (update) {
+				setData(territory);
+			} else {
+				openDialog(territory);
+			}
 		} catch (error) {
 			console.error("Failed to fetch territory details:", error);
 			throw error;
 		}
 	};
 
-	const { closeDialog } = useDialogStore();
-
 	const assignTerritory = async (territoryId: number, peopleId: number) => {
 		try {
 			await TerritoriesService.assignTerritory(territoryId, peopleId);
-			await TerritoriesService.territorySync(false, territoryId);
-			closeDialog();
-			await fetchTerritories();
+			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to assign territory:", error);
 			throw error;
@@ -111,11 +111,20 @@ export const useTerritories = () => {
 	const returnTerritory = async (assignmentId: number, territoryId: number) => {
 		try {
 			await TerritoriesService.returnTerritory(assignmentId);
-			await TerritoriesService.territorySync(false, territoryId);
-			closeDialog();
-			await fetchTerritories();
+			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to return territory:", error);
+			throw error;
+		}
+	};
+
+	const territorySync = async (synced: boolean, territoryId: number) => {
+		try {
+			await TerritoriesService.territorySync(synced, territoryId);
+			await fetchTerritoryDetails(territoryId, true);
+			await fetchTerritories(false);
+		} catch (error) {
+			console.error("Failed to sync territory:", error);
 			throw error;
 		}
 	};
@@ -125,5 +134,6 @@ export const useTerritories = () => {
 		fetchTerritoryDetails,
 		assignTerritory,
 		returnTerritory,
+		territorySync,
 	};
 };
