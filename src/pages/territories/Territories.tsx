@@ -26,7 +26,13 @@ export default function Territories() {
 			{isFetchingTerritories ? (
 				<LoadingFullScreen size={100} />
 			) : (
-				<Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+				<Box
+					sx={{
+						height: "100vh",
+						display: "flex",
+						flexDirection: "column",
+					}}
+				>
 					<Box
 						sx={{
 							backgroundColor: "#fff",

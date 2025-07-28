@@ -1,4 +1,3 @@
-/* index.css */
 html,
 body {
 	height: 100%;
@@ -8,9 +7,9 @@ body {
 
 #root {
 	height: 100%;
+	width: 100%;
 	display: flex;
-	justify-content: center;
-	align-items: flex-start; /* ou center se quiser verticalmente centralizado */
+	justify-content: center; /* centraliza visualmente */
 	background-color: #fff;
 	font-family: Trebuchet MS, sans-serif;
 }
