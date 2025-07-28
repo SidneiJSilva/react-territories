@@ -1,60 +1,14 @@
 import { TerritoriesService } from "@/services";
 import { territoriesStore } from "@/stores/territoriesStore";
-import {
-	type TerritoryInterface,
-	type GroupedTerritoryArea,
-} from "@/interfaces";
 import { useDialogStore } from "@/stores/dialogStore";
-
-type TerritoryStatus = TerritoryInterface["status"];
+import { useFilters } from "@/hooks";
+import { filtersStore } from "@/stores/filtersStore";
 
 export const useTerritories = () => {
 	const { setTerritories, setGroupedTerritories, setIsFetchingTerritories } =
 		territoriesStore();
 
-	const STATUSES: TerritoryStatus[] = [
-		"assigned",
-		"resting",
-		"delayed",
-		"delayed_soon",
-		"available",
-	];
-
-	interface GroupedTerritoriesAccumulator {
-		[area: string]: GroupedTerritoryArea;
-	}
-
-	const groupTerritories = (
-		territories: TerritoryInterface[]
-	): GroupedTerritoriesAccumulator => {
-		return territories.reduce<GroupedTerritoriesAccumulator>(
-			(acc, territory) => {
-				const isComercial: boolean = territory.territorytype === "Comercial";
-				const area: string = isComercial
-					? "Comercial"
-					: territory.territoryarea || "Sem área";
-
-				if (!acc[area]) {
-					const initialStats: Record<TerritoryStatus, number> = STATUSES.reduce(
-						(stats, status) => ({ ...stats, [status]: 0 }),
-						{} as Record<TerritoryStatus, number>
-					);
-
-					acc[area] = {
-						area,
-						stats: initialStats,
-						territories: [],
-					};
-				}
-
-				acc[area].territories.push(territory);
-				acc[area].stats[territory.status] += 1;
-
-				return acc;
-			},
-			{} as GroupedTerritoriesAccumulator
-		);
-	};
+	const { groupedByAreaWithStats } = useFilters();
 
 	const fetchTerritories = async (showLoading: boolean = true) => {
 		if (showLoading) setIsFetchingTerritories(true);
@@ -64,13 +18,7 @@ export const useTerritories = () => {
 
 			setTerritories(territories);
 
-			const groupedMap = groupTerritories(territories);
-
-			const groupedByAreaWithStats = Object.values(
-				groupedMap
-			) as GroupedTerritoryArea[];
-
-			setGroupedTerritories(groupedByAreaWithStats);
+			setGroupedTerritories(groupedByAreaWithStats(territories));
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);
 			throw error;
@@ -123,10 +71,18 @@ export const useTerritories = () => {
 			await TerritoriesService.territorySync(synced, territoryId);
 			await fetchTerritoryDetails(territoryId, true);
 			await fetchTerritories(false);
+			resetFilters();
 		} catch (error) {
 			console.error("Failed to sync territory:", error);
 			throw error;
 		}
+	};
+
+	const { setPersonId, setStatus } = filtersStore();
+
+	const resetFilters = () => {
+		setPersonId("");
+		setStatus("");
 	};
 
 	return {

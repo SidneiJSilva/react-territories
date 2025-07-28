@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import TerritoriesList from "@/components/organisms/TerritoriesList";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
+import Header from "@/components/organisms/Header";
 
 import { useEffect } from "react";
 import { useTerritories, usePeople } from "@/hooks";
@@ -36,7 +37,7 @@ export default function Territories() {
 							top: 0,
 						}}
 					>
-						<h1>Filtros</h1>
+						<Header />
 					</Box>
 
 					<TerritoriesList />

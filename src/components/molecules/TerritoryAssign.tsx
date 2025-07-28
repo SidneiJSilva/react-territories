@@ -47,7 +47,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 						labelId="demo-simple-select-label"
 						id="demo-simple-select"
 						value={peopleId}
-						label="Age"
+						label="Publicador"
 						onChange={handleChange}
 					>
 						{people.map((person) => (

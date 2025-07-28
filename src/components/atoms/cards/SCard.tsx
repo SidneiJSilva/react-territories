@@ -11,7 +11,7 @@ interface SCardProps {
 	title?: string;
 	children: ReactNode;
 	sx?: SxProps;
-	onClick: () => void;
+	onClick?: () => void;
 }
 
 export default function SCard({ title, children, sx, onClick }: SCardProps) {
