@@ -1,11 +1,10 @@
-// import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import router from "@/router";
+import { BrowserRouter } from "react-router-dom"; // Importe BrowserRouter
+import TerritoriesRoutes from "@/TerritoriesRoutes"; // Importe o novo componente
 import "./index.css";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
-	//<StrictMode>
-	<RouterProvider router={router} />
-	//</StrictMode>
+	<BrowserRouter>
+		<TerritoriesRoutes />
+	</BrowserRouter>
 );

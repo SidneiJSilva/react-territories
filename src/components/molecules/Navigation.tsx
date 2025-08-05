@@ -8,7 +8,7 @@ export default function ColorToggleButton() {
 	const [territory, setTerritory] = useState(navigationData[0].value);
 
 	const handleChange = (
-		event: React.MouseEvent<HTMLElement>,
+		_event: React.MouseEvent<HTMLElement>,
 		newValue: string
 	) => {
 		setTerritory(newValue);
