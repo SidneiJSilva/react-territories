@@ -13,7 +13,7 @@ export default defineConfig({
 			exposes: {
 				"./App": "./src/TerritoriesRoutes.tsx",
 			},
-			shared: ["react", "react-dom", "react-router-dom"],
+			shared: ["react", "react-dom", "react-router-dom", "react-leaflet"],
 		}),
 	],
 	resolve: {
