@@ -2,15 +2,18 @@ import Box from "@mui/material/Box";
 import TerritoriesList from "@/components/organisms/TerritoriesList";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
 import Header from "@/components/organisms/Header";
+import Map from "@/components/organisms/Map";
 
 import { useEffect } from "react";
 import { useTerritories, usePeople } from "@/hooks";
 import { territoriesStore } from "@/stores/territoriesStore";
+import { navigationStore } from "@/stores/navigationStore";
 
 export default function Territories() {
 	const { fetchTerritories } = useTerritories();
 	const { fetchPeople } = usePeople();
 	const { isFetchingTerritories } = territoriesStore();
+	const { actualPage } = navigationStore();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -46,7 +49,7 @@ export default function Territories() {
 						<Header />
 					</Box>
 
-					<TerritoriesList />
+					{actualPage === "list" ? <TerritoriesList /> : <Map />}
 				</Box>
 			)}
 		</>

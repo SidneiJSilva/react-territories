@@ -15,6 +15,10 @@ const router = createBrowserRouter([
 				index: true,
 				element: <Territories />,
 			},
+			{
+				path: "/map",
+				element: <Territories />,
+			},
 		],
 	},
 ]);
