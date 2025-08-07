@@ -13,19 +13,3 @@ body {
 	background-color: #fff;
 	font-family: Trebuchet MS, sans-serif;
 }
-
-.territory-label {
-	background: transparent;
-	border: none;
-	box-shadow: none;
-	font-size: 24px;
-	font-weight: bold;
-	color: white;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: black;
-}
-
-/* Regra para o pseudo-elemento escrita separadamente */
-.territory-label::before {
-	display: none;
-}
