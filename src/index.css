@@ -1,3 +1,19 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#root {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center; /* centraliza visualmente */
+	background-color: #fff;
+	font-family: Trebuchet MS, sans-serif;
+}
+
 .territory-label {
 	background: transparent;
 	border: none;
