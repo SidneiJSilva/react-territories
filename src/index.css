@@ -18,18 +18,14 @@ body {
 	background: transparent;
 	border: none;
 	box-shadow: none;
-	font-size: 24px; /* Ajuste o tamanho conforme necessário */
+	font-size: 24px;
 	font-weight: bold;
-
-	/* Cor de preenchimento do texto */
 	color: white;
-
-	/* Borda do texto (1px de espessura, cor preta) */
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: black;
+}
 
-	/* Remove a "seta" do balão de diálogo */
-	&::before {
-		display: none;
-	}
+/* Regra para o pseudo-elemento escrita separadamente */
+.territory-label::before {
+	display: none;
 }
