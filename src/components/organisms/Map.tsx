@@ -57,7 +57,7 @@ export default function Map() {
 							fillOpacity: 0.3,
 						}}
 					>
-						<Tooltip permanent>
+						<Tooltip permanent className="territory-label">
 							<strong>{territory.id}</strong>
 						</Tooltip>
 					</Polygon>
