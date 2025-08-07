@@ -1,15 +1,19 @@
-html,
-body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
+.territory-label {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	font-size: 24px; /* Ajuste o tamanho conforme necessário */
+	font-weight: bold;
 
-#root {
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center; /* centraliza visualmente */
-	background-color: #fff;
-	font-family: Trebuchet MS, sans-serif;
+	/* Cor de preenchimento do texto */
+	color: white;
+
+	/* Borda do texto (1px de espessura, cor preta) */
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black;
+
+	/* Remove a "seta" do balão de diálogo */
+	&::before {
+		display: none;
+	}
 }

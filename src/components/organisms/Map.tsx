@@ -3,24 +3,25 @@ import "leaflet/dist/leaflet.css";
 import { territoriesStore } from "@/stores/territoriesStore";
 import { statusColors } from "@/constants/colors";
 import { type TerritoryInterface } from "@/interfaces";
+import { type LatLngExpression } from "leaflet";
 
-// Verifica e transforma coordenadas em [number, number][]
-const parseBoundaries = (boundaries: unknown): [number, number][] => {
+// Corrige boundaries e tipos
+const parseBoundaries = (boundaries: unknown): LatLngExpression[] => {
 	if (!Array.isArray(boundaries)) return [];
 	return boundaries
 		.filter((b): b is [number, number] => Array.isArray(b) && b.length === 2)
-		.map(([lng, lat]) => [Number(lng), Number(lat)]);
+		.map(([lng, lat]) => [Number(lat), Number(lng)]); // Inverte: Leaflet usa [lat, lng]
 };
 
-// Função para pegar o centro do primeiro território válido
+// Pega centro
 const getFirstValidCenter = (
 	territories: TerritoryInterface[]
-): [number, number] => {
+): LatLngExpression => {
 	for (const t of territories) {
 		const coords = parseBoundaries(t.boundaries);
 		if (coords.length > 0) return coords[0];
 	}
-	return [0, 0]; // fallback
+	return [0, 0];
 };
 
 export default function Map() {
@@ -39,7 +40,6 @@ export default function Map() {
 		>
 			<TileLayer
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				// Atualizado: nome correto da prop
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			/>
 			{residentialTerritories.map((territory) => {
@@ -51,13 +51,13 @@ export default function Map() {
 						key={territory.id}
 						positions={coordinates}
 						pathOptions={{
-							color: "#000000", // Borda
-							weight: 2,
+							color: "#000000",
+							weight: 1,
 							fillColor: statusColors[territory.status],
-							fillOpacity: 0.5,
+							fillOpacity: 0.3,
 						}}
 					>
-						<Tooltip permanent>
+						<Tooltip permanent className="territory-label">
 							<strong>{territory.id}</strong>
 						</Tooltip>
 					</Polygon>
