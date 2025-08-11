@@ -7,7 +7,8 @@ import {
 type TerritoryStatus = TerritoryInterface["status"];
 
 export const useFilters = () => {
-	const { territories, setGroupedTerritories } = territoriesStore();
+	const { territories, setGroupedTerritories, setTerritoriesList } =
+		territoriesStore();
 
 	// GROUP TERRITORIES
 	const STATUSES: TerritoryStatus[] = [
@@ -67,6 +68,7 @@ export const useFilters = () => {
 				: territories.filter((territory) => territory.status === status)
 			: territories;
 
+		setTerritoriesList(filteredTerritories);
 		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));
 	};
 
@@ -75,10 +77,13 @@ export const useFilters = () => {
 		const filteredTerritories = personId
 			? territories.filter(
 					(territory) =>
-						territory.peopleid === personId && territory.status !== "available"
+						territory.peopleid === personId &&
+						territory.status !== "available" &&
+						territory.status !== "resting"
 			  )
 			: territories;
 
+		setTerritoriesList(filteredTerritories);
 		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));
 	};
 

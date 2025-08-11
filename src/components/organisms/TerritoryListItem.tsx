@@ -10,8 +10,10 @@ import { useTerritories } from "@/hooks";
 
 export default function TerritoryListItem({
 	territory,
+	from,
 }: {
 	territory: TerritoryInterface;
+	from: "list" | "group";
 }) {
 	const isDarkText = territory.status === "delayed_soon";
 
@@ -87,6 +89,7 @@ export default function TerritoryListItem({
 					number={territory.number}
 					link={territory.link ?? undefined}
 					isDarkText={isDarkText}
+					territoryarea={from === "list" ? territory.territoryarea : ""}
 				/>
 			</>
 		</SCard>

@@ -4,6 +4,10 @@ export const navigationData = [
 		value: "list",
 	},
 	{
+		label: "Grupo",
+		value: "group",
+	},
+	{
 		label: "Mapa",
 		value: "map",
 	},

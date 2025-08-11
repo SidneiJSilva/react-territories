@@ -7,7 +7,7 @@ import { territoriesStore } from "@/stores/territoriesStore";
 import { statusIcons } from "@/constants/statusIcons";
 
 export default function TerritoriesList() {
-	const { groupedTerritories } = territoriesStore();
+	const { territoriesList, statusCounts } = territoriesStore();
 
 	return (
 		<Box
@@ -18,66 +18,57 @@ export default function TerritoriesList() {
 				padding: "2rem",
 			}}
 		>
-			{groupedTerritories.map((group) => (
+			<SCard sx={{ marginBottom: "1rem" }}>
 				<Box
-					key={group.area}
 					sx={{
-						marginBottom: "2rem",
 						display: "flex",
-						flexDirection: "column",
-						gap: "1rem",
+						alignItems: "center",
+						justifyContent: "space-between",
 					}}
 				>
-					<SCard>
-						<Box
-							sx={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "space-between",
-							}}
-						>
-							<Typography variant="h5" fontWeight="bold">
-								{group.area}
-							</Typography>
+					<Typography variant="h5" fontWeight="bold">
+						Status
+					</Typography>
 
-							<Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-								{Object.entries(group.stats).map(([status, count]) => {
-									const Icon = statusIcons[status];
-									if (!Icon) return null;
+					<Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+						{Object.entries(statusCounts).map(([status, count]) => {
+							const Icon = statusIcons[status];
+							if (!Icon) return null;
 
-									return (
-										<Box
-											key={status}
-											sx={{
-												display: "flex",
-												alignItems: "center",
-												gap: "0.25rem",
-												color: Icon.color,
-											}}
-										>
-											{Icon.icon}
-											<Typography variant="body2">{count}</Typography>
-										</Box>
-									);
-								})}
-							</Box>
-						</Box>
-					</SCard>
-
-					<Box
-						sx={{
-							display: "flex",
-							flexWrap: "wrap",
-							gap: "1rem",
-							justifyContent: "space-between",
-						}}
-					>
-						{group.territories.map((territory) => (
-							<TerritoryListItem key={territory.id} territory={territory} />
-						))}
+							return (
+								<Box
+									key={status}
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: "0.25rem",
+										color: Icon.color,
+									}}
+								>
+									{Icon.icon}
+									<Typography variant="body2">{count}</Typography>
+								</Box>
+							);
+						})}
 					</Box>
 				</Box>
-			))}
+			</SCard>
+
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: "repeat(2, 1fr)", // sempre 2 colunas
+					gap: "1rem",
+				}}
+			>
+				{territoriesList.map((territory) => (
+					<TerritoryListItem
+						from="list"
+						key={territory.id}
+						territory={territory}
+					/>
+				))}
+			</Box>
 		</Box>
 	);
 }

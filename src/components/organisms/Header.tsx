@@ -10,7 +10,7 @@ export default function Header() {
 		<Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
 			<Navigation />
 
-			{actualPage === "list" && <Filters />}
+			{(actualPage === "list" || actualPage === "group") && <Filters />}
 		</Box>
 	);
 }

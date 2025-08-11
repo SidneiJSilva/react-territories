@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import TerritoriesList from "@/components/organisms/TerritoriesList";
+import TerritoriesGroup from "@/components/organisms/TerritoriesGroup";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
 import Header from "@/components/organisms/Header";
 import Map from "@/components/organisms/Map";
@@ -49,7 +50,13 @@ export default function Territories() {
 						<Header />
 					</Box>
 
-					{actualPage === "list" ? <TerritoriesList /> : <Map />}
+					{actualPage === "list" ? (
+						<TerritoriesList />
+					) : actualPage === "group" ? (
+						<TerritoriesGroup />
+					) : (
+						<Map />
+					)}
 				</Box>
 			)}
 		</>

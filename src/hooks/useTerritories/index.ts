@@ -3,12 +3,43 @@ import { territoriesStore } from "@/stores/territoriesStore";
 import { useDialogStore } from "@/stores/dialogStore";
 import { useFilters } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
+import { type TerritoryStatusStats } from "@/stores/territoriesStore";
 
 export const useTerritories = () => {
-	const { setTerritories, setGroupedTerritories, setIsFetchingTerritories } =
-		territoriesStore();
+	const {
+		setTerritories,
+		setGroupedTerritories,
+		setIsFetchingTerritories,
+		setStatusCounts,
+		setTerritoriesList,
+	} = territoriesStore();
 
 	const { groupedByAreaWithStats } = useFilters();
+
+	interface Territory {
+		id: number;
+		status: string;
+	}
+
+	const statusCounts = (territories: Territory[]): TerritoryStatusStats => {
+		const initialCounts: TerritoryStatusStats = {
+			assigned: 0,
+			resting: 0,
+			delayed: 0,
+			delayed_soon: 0,
+			available: 0,
+		};
+
+		return territories.reduce(
+			(counts: TerritoryStatusStats, territory: Territory) => {
+				if (counts.hasOwnProperty(territory.status)) {
+					counts[territory.status as keyof TerritoryStatusStats] += 1;
+				}
+				return counts;
+			},
+			initialCounts
+		);
+	};
 
 	const fetchTerritories = async (showLoading: boolean = true) => {
 		if (showLoading) setIsFetchingTerritories(true);
@@ -16,8 +47,9 @@ export const useTerritories = () => {
 		try {
 			const territories = await TerritoriesService.fetchTerritories();
 
+			setStatusCounts(statusCounts(territories));
 			setTerritories(territories);
-
+			setTerritoriesList(territories);
 			setGroupedTerritories(groupedByAreaWithStats(territories));
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);

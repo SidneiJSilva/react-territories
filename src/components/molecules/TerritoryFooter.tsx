@@ -8,6 +8,7 @@ export function TerritoryFooter({
 	number,
 	link,
 	isDarkText,
+	territoryarea,
 }: {
 	status: "assigned" | "resting" | "delayed_soon" | "delayed" | "available";
 	delayedbydays?: number;
@@ -15,6 +16,7 @@ export function TerritoryFooter({
 	number: number;
 	link?: string;
 	isDarkText: boolean;
+	territoryarea?: string;
 }) {
 	return (
 		<Box
@@ -31,17 +33,31 @@ export function TerritoryFooter({
 				</Box>
 			</Box>
 
-			<Typography
-				variant="h5"
-				fontWeight="bold"
-				onClick={(e) => {
-					e.preventDefault();
-					if (!link) return;
-					window.open(link, "BLANK");
-				}}
-			>
-				{number}
-			</Typography>
+			<Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+				<Typography
+					variant="caption"
+					fontWeight="bold"
+					onClick={(e) => {
+						e.preventDefault();
+						if (!link) return;
+						window.open(link, "BLANK");
+					}}
+				>
+					{territoryarea}
+				</Typography>
+
+				<Typography
+					variant="h5"
+					fontWeight="bold"
+					onClick={(e) => {
+						e.preventDefault();
+						if (!link) return;
+						window.open(link, "BLANK");
+					}}
+				>
+					{number}
+				</Typography>
+			</Box>
 		</Box>
 	);
 }

@@ -13,6 +13,11 @@
           return pkg
         }
       ,
+        "react-leaflet": async () => {
+          let pkg = await import("__mf__virtual/territoriesApp__prebuild__react_mf_2_leaflet__prebuild__.js")
+          return pkg
+        }
+      ,
         "react-dom": async () => {
           let pkg = await import("__mf__virtual/territoriesApp__prebuild__react_mf_2_dom__prebuild__.js")
           return pkg
@@ -70,6 +75,32 @@
             shareConfig: {
               singleton: false,
               requiredVersion: "^19.1.0"
+            }
+          }
+        ,
+          "react-leaflet": {
+            name: "react-leaflet",
+            version: "5.0.0",
+            scope: ["default"],
+            loaded: false,
+            from: "territoriesApp",
+            async get () {
+              usedShared["react-leaflet"].loaded = true
+              const {"react-leaflet": pkgDynamicImport} = importMap 
+              const res = await pkgDynamicImport()
+              const exportModule = {...res}
+              // All npm packages pre-built by vite will be converted to esm
+              Object.defineProperty(exportModule, "__esModule", {
+                value: true,
+                enumerable: false
+              })
+              return function () {
+                return exportModule
+              }
+            },
+            shareConfig: {
+              singleton: false,
+              requiredVersion: "^5.0.0"
             }
           }
         ,
