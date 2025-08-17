@@ -78,9 +78,13 @@ export const useTerritories = () => {
 		}
 	};
 
-	const assignTerritory = async (territoryId: number, peopleId: number) => {
+	const assignTerritory = async (
+		territoryId: number,
+		peopleId: number,
+		date: string
+	) => {
 		try {
-			await TerritoriesService.assignTerritory(territoryId, peopleId);
+			await TerritoriesService.assignTerritory(territoryId, peopleId, date);
 			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to assign territory:", error);

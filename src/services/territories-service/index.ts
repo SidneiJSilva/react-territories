@@ -27,11 +27,15 @@ export class TerritoriesService {
 		return data[0] as unknown as TerritoryDetails;
 	}
 
-	static async assignTerritory(territoryId: number, peopleId: number) {
+	static async assignTerritory(
+		territoryId: number,
+		peopleId: number,
+		date: string
+	) {
 		const { error } = await SupabaseService.from("assignments").insert({
 			"territory-id": territoryId,
 			"people-id": peopleId,
-			"assigned-at": new Date().toISOString(),
+			"assigned-at": new Date(date).toISOString(),
 			campaign: false,
 		});
 
