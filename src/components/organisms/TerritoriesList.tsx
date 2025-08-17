@@ -57,7 +57,11 @@ export default function TerritoriesList() {
 			<Box
 				sx={{
 					display: "grid",
-					gridTemplateColumns: "repeat(2, 1fr)", // sempre 2 colunas
+					gridTemplateColumns: {
+						xs: "1fr", // mobile → 1 coluna
+						sm: "repeat(2, 1fr)", // tablet → 2 colunas
+						md: "repeat(3, 1fr)", // desktop → 3 colunas
+					},
 					gap: "1rem",
 				}}
 			>
