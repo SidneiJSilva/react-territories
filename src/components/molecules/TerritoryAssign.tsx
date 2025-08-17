@@ -19,13 +19,14 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 	const [peopleId, setPeopleId] = useState("");
 	const { people } = peopleStore();
 	const { assignTerritory } = useTerritories();
-	const [date, setDate] = useState<Dayjs>(dayjs());
+	const [date, setDate] = useState<Dayjs | null>(dayjs());
 
 	const handleChange = (event: SelectChangeEvent) => {
 		setPeopleId(event.target.value as string);
 	};
 
 	const handleOnClick = async () => {
+		if (!date) return;
 		await assignTerritory(data.id, parseInt(peopleId), date.toString());
 	};
 
@@ -76,6 +77,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 						value={date}
 						onChange={(newValue) => setDate(newValue)}
 						format="DD/MM/YYYY"
+						maxDate={dayjs()}
 						slotProps={{
 							textField: { size: "small", fullWidth: true },
 						}}
