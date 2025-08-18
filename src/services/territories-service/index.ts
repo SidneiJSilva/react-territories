@@ -54,9 +54,9 @@ export class TerritoriesService {
 		}
 	}
 
-	static async returnTerritory(assignmentId: number) {
+	static async returnTerritory(assignmentId: number, date: string) {
 		const { error } = await SupabaseService.from("assignments")
-			.update({ "returned-at": new Date().toISOString() })
+			.update({ "returned-at": new Date(date).toISOString() })
 			.eq("id", assignmentId);
 
 		if (error) {
