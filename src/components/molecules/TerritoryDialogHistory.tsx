@@ -8,6 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HistoryIcon from "@mui/icons-material/History";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 import { Box } from "@mui/material";
 
 import { format } from "date-fns";
@@ -25,26 +27,31 @@ type Assignment = {
 
 type Props = {
 	assignments: Assignment[];
+	onDelete?: (id: number) => void;
+	isDeleting?: boolean;
 };
 
 const headerData = [
-	{ label: "Nome", width: "50%" },
-	{ label: "Atribuído", width: "25%" },
-	{ label: "Finalizado", width: "25%" },
+	{ label: "Nome", width: "40%" },
+	{ label: "Atribuído", width: "20%" },
+	{ label: "Finalizado", width: "20%" },
 ];
 
-export default function TerritoryDialogHistory({ assignments }: Props) {
+export default function TerritoryDialogHistory({
+	assignments,
+	onDelete,
+	isDeleting,
+}: Props) {
 	return (
 		<div>
 			<Box sx={{ display: "flex", gap: 1, color: statusColors.assigned }}>
 				<HistoryIcon />
-
 				<Typography variant="body1" fontWeight={700}>
 					Histórico
 				</Typography>
 			</Box>
 
-			{assignments ? (
+			{assignments?.length ? (
 				<TableContainer component={Paper} elevation={0}>
 					<Table size="small" aria-label="assignment history">
 						<TableHead>
@@ -56,6 +63,11 @@ export default function TerritoryDialogHistory({ assignments }: Props) {
 										</Typography>
 									</TableCell>
 								))}
+								<TableCell align="center" sx={{ width: "20%" }}>
+									<Typography variant="caption" fontWeight={700}>
+										Ações
+									</Typography>
+								</TableCell>
 							</TableRow>
 						</TableHead>
 
@@ -82,6 +94,18 @@ export default function TerritoryDialogHistory({ assignments }: Props) {
 												? format(new Date(assignment.returnedAt), "dd/MM/yyyy")
 												: "-"}
 										</Typography>
+									</TableCell>
+
+									<TableCell align="center">
+										<IconButton
+											disabled={isDeleting}
+											aria-label="delete"
+											color="error"
+											size="small"
+											onClick={() => onDelete?.(assignment.id)}
+										>
+											<DeleteIcon />
+										</IconButton>
 									</TableCell>
 								</TableRow>
 							))}

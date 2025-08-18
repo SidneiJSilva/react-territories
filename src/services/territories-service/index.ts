@@ -63,4 +63,14 @@ export class TerritoriesService {
 			throw new Error(`Error assigning territory: ${error.message}`);
 		}
 	}
+
+	static async deleteAssignment(assignmentId: number) {
+		const { error } = await SupabaseService.from("assignments")
+			.delete()
+			.eq("id", assignmentId);
+
+		if (error) {
+			throw new Error(`Error assigning territory: ${error.message}`);
+		}
+	}
 }

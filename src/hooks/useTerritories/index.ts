@@ -4,6 +4,7 @@ import { useDialogStore } from "@/stores/dialogStore";
 import { useFilters } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
 import { type TerritoryStatusStats } from "@/stores/territoriesStore";
+import { set } from "date-fns";
 
 export const useTerritories = () => {
 	const {
@@ -12,6 +13,7 @@ export const useTerritories = () => {
 		setIsFetchingTerritories,
 		setStatusCounts,
 		setTerritoriesList,
+		setIsLoading,
 	} = territoriesStore();
 
 	const { groupedByAreaWithStats } = useFilters();
@@ -78,31 +80,59 @@ export const useTerritories = () => {
 		}
 	};
 
+	const deleteAssignment = async (
+		assignmentId: number,
+		territoryId: number
+	) => {
+		setIsLoading(true);
+
+		try {
+			await TerritoriesService.deleteAssignment(assignmentId);
+			await fetchTerritories(false);
+			await fetchTerritoryDetails(territoryId, true);
+		} catch (error) {
+			console.error("Failed to delete assignment:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	const assignTerritory = async (
 		territoryId: number,
 		peopleId: number,
 		date: string
 	) => {
+		setIsLoading(true);
+
 		try {
 			await TerritoriesService.assignTerritory(territoryId, peopleId, date);
 			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to assign territory:", error);
 			throw error;
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	const returnTerritory = async (assignmentId: number, territoryId: number) => {
+		setIsLoading(true);
+
 		try {
 			await TerritoriesService.returnTerritory(assignmentId);
 			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to return territory:", error);
 			throw error;
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	const territorySync = async (synced: boolean, territoryId: number) => {
+		setIsLoading(true);
+
 		try {
 			await TerritoriesService.territorySync(synced, territoryId);
 			await fetchTerritoryDetails(territoryId, true);
@@ -111,6 +141,8 @@ export const useTerritories = () => {
 		} catch (error) {
 			console.error("Failed to sync territory:", error);
 			throw error;
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -127,5 +159,6 @@ export const useTerritories = () => {
 		assignTerritory,
 		returnTerritory,
 		territorySync,
+		deleteAssignment,
 	};
 };

@@ -20,12 +20,14 @@ interface TerritoriesStore {
 	groupedTerritories: GroupedTerritoryArea[];
 	isFetchingTerritories: boolean;
 	statusCounts: TerritoryStatusStats;
+	isLoading: boolean;
 
 	setTerritories: (territories: TerritoryInterface[]) => void;
 	setTerritoriesList: (territories: TerritoryInterface[]) => void;
 	setGroupedTerritories: (groups: GroupedTerritoryArea[]) => void;
 	setIsFetchingTerritories: (isFetching: boolean) => void;
 	setStatusCounts: (counts: TerritoryStatusStats) => void;
+	setIsLoading: (isLoading: boolean) => void;
 }
 
 export const territoriesStore = create<TerritoriesStore>((set) => ({
@@ -40,6 +42,7 @@ export const territoriesStore = create<TerritoriesStore>((set) => ({
 		delayed_soon: 0,
 		available: 0,
 	},
+	isLoading: false,
 
 	setTerritories: (territories) => set({ territories }),
 	setTerritoriesList: (territoriesList) => set({ territoriesList }),
@@ -47,4 +50,5 @@ export const territoriesStore = create<TerritoriesStore>((set) => ({
 	setStatusCounts: (statusCounts) => set({ statusCounts }),
 	setIsFetchingTerritories: (isFetching: boolean) =>
 		set({ isFetchingTerritories: isFetching }),
+	setIsLoading: (isLoading: boolean) => set({ isLoading }),
 }));
