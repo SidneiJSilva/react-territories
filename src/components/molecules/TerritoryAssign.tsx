@@ -49,7 +49,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 			<Box
 				sx={{
 					display: "flex",
-					flexDirection: { xs: "column", md: "row" },
+					flexDirection: { xs: "column", sm: "row" },
 					gap: 2,
 				}}
 			>
