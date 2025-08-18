@@ -73,7 +73,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 
 				<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
 					<DatePicker
-						label="Selecione uma data"
+						label="Data de atribuição"
 						value={date}
 						onChange={(newValue) => setDate(newValue)}
 						format="DD/MM/YYYY"

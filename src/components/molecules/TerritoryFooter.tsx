@@ -33,10 +33,17 @@ export function TerritoryFooter({
 				</Box>
 			</Box>
 
-			<Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+			<Box
+				sx={{
+					display: "flex",
+					gap: "0.5rem",
+					alignItems: "center",
+				}}
+			>
 				<Typography
 					variant="caption"
 					fontWeight="bold"
+					align="right"
 					onClick={(e) => {
 						e.preventDefault();
 						if (!link) return;

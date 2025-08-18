@@ -115,11 +115,15 @@ export const useTerritories = () => {
 		}
 	};
 
-	const returnTerritory = async (assignmentId: number, territoryId: number) => {
+	const returnTerritory = async (
+		assignmentId: number,
+		territoryId: number,
+		date: string
+	) => {
 		setIsLoading(true);
 
 		try {
-			await TerritoriesService.returnTerritory(assignmentId);
+			await TerritoriesService.returnTerritory(assignmentId, date);
 			await territorySync(false, territoryId);
 		} catch (error) {
 			console.error("Failed to return territory:", error);
