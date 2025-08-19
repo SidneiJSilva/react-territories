@@ -2,9 +2,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SCard from "@/components/atoms/cards/SCard";
 import TerritoryListItem from "@/components/organisms/TerritoryListItem";
-import { territoriesStore } from "@/stores/territoriesStore";
 
+import { territoriesStore } from "@/stores/territoriesStore";
 import { statusIcons } from "@/constants/statusIcons";
+import { isMobileScreen } from "@/utils/screenSize";
 
 export default function TerritoriesList() {
 	const { territoriesList, statusCounts } = territoriesStore();
@@ -26,11 +27,21 @@ export default function TerritoriesList() {
 						justifyContent: "space-between",
 					}}
 				>
-					<Typography variant="h5" fontWeight="bold">
-						Status
-					</Typography>
+					{isMobileScreen() ? null : (
+						<Typography variant="h5" fontWeight="bold">
+							Status
+						</Typography>
+					)}
 
-					<Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+					<Box
+						sx={{
+							display: "flex",
+							gap: "1rem",
+							alignItems: "center",
+							justifyContent: "space-between",
+							width: isMobileScreen() ? "100%" : null,
+						}}
+					>
 						{Object.entries(statusCounts).map(([status, count]) => {
 							const Icon = statusIcons[status];
 							if (!Icon) return null;
