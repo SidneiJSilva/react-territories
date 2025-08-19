@@ -7,6 +7,7 @@ import { statusIcons } from "@/constants/statusIcons";
 import { pt } from "@/constants/lang";
 import { useFilters } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
+import { isMobileScreen } from "@/utils/screenSize";
 
 export default function Filters() {
 	const { people } = peopleStore();
@@ -34,6 +35,7 @@ export default function Filters() {
 					<InputLabel id="select-publisher-label" shrink>
 						Publicador
 					</InputLabel>
+
 					<Select
 						labelId="select-publisher-label"
 						id="select-publisher"
@@ -53,55 +55,57 @@ export default function Filters() {
 				</FormControl>
 			</Box>
 
-			<Box sx={{ width: 200 }}>
-				<FormControl fullWidth size="small">
-					<InputLabel id="select-status-label" shrink>
-						Status
-					</InputLabel>
-					<Select
-						labelId="select-status-label"
-						id="select-status"
-						value={status}
-						label="Status"
-						onChange={handleStatusOnChange}
-						displayEmpty
-					>
-						<MenuItem value="">Todos</MenuItem>
-						<MenuItem value="no_synced">
-							<Box
-								sx={{
-									display: "flex",
-									alignItems: "center",
-									gap: "0.25rem",
-									color: "red",
-									fontSize: ".9rem",
-								}}
-							>
-								<CloudOutlinedIcon />
-								Não sincronizado
-							</Box>
-						</MenuItem>
-
-						{Object.keys(statusIcons).map((statusKey) => (
-							<MenuItem key={statusKey} value={statusKey}>
+			{isMobileScreen() ? null : (
+				<Box sx={{ width: 200 }}>
+					<FormControl fullWidth size="small">
+						<InputLabel id="select-status-label" shrink>
+							Status
+						</InputLabel>
+						<Select
+							labelId="select-status-label"
+							id="select-status"
+							value={status}
+							label="Status"
+							onChange={handleStatusOnChange}
+							displayEmpty
+						>
+							<MenuItem value="">Todos</MenuItem>
+							<MenuItem value="no_synced">
 								<Box
 									sx={{
 										display: "flex",
 										alignItems: "center",
 										gap: "0.25rem",
-										color: statusIcons[statusKey].color,
+										color: "red",
 										fontSize: ".9rem",
 									}}
 								>
-									{statusIcons[statusKey].icon}
-
-									{pt.status[statusKey as keyof typeof pt.status]}
+									<CloudOutlinedIcon />
+									Não sincronizado
 								</Box>
 							</MenuItem>
-						))}
-					</Select>
-				</FormControl>
-			</Box>
+
+							{Object.keys(statusIcons).map((statusKey) => (
+								<MenuItem key={statusKey} value={statusKey}>
+									<Box
+										sx={{
+											display: "flex",
+											alignItems: "center",
+											gap: "0.25rem",
+											color: statusIcons[statusKey].color,
+											fontSize: ".9rem",
+										}}
+									>
+										{statusIcons[statusKey].icon}
+
+										{pt.status[statusKey as keyof typeof pt.status]}
+									</Box>
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				</Box>
+			)}
 		</Box>
 	);
 }
