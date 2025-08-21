@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { type TerritoryInterface } from "@/interfaces";
 
-// Define os status válidos para contagem
 export type TerritoryStatus = TerritoryInterface["status"];
 
 export type TerritoryStatusStats = {

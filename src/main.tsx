@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom"; // Importe BrowserRouter
-import TerritoriesRoutes from "@/TerritoriesRoutes"; // Importe o novo componente
+import { BrowserRouter } from "react-router-dom";
+import TerritoriesRoutes from "@/TerritoriesRoutes";
 import "./index.css";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
