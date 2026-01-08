@@ -11,7 +11,8 @@ import TerritoryDialogHeader from "../molecules/TerritoryDialogHeader";
 import TerritoryReturn from "@/components/molecules/TerritoryReturn";
 import TerritoryAssign from "../molecules/TerritoryAssign";
 import TerritorySync from "../molecules/TerritorySync";
-import { Box, Typography } from "@mui/material";
+import TerritoryComment from "./TerritoryComment";
+import { Box, Typography, TextField } from "@mui/material";
 
 import { useTerritories } from "@/hooks";
 import { useDialogStore } from "@/stores/dialogStore";
@@ -22,6 +23,7 @@ export default function TerritoryDialog() {
 	const { open, data, closeDialog } = useDialogStore();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [idToDelete, setIdToDelete] = useState<number | null>(null);
+	const [comment, setComment] = useState(data?.comment || "");
 	const { deleteAssignment: onDeleteAssignment } = useTerritories();
 	const { isLoading } = territoriesStore();
 
@@ -76,12 +78,13 @@ export default function TerritoryDialog() {
 				) : (
 					<TerritoryReturn data={data} />
 				)}
-
 				<TerritoryDialogHistory
 					onDelete={askForConfirmation}
 					assignments={data.assignments}
 					isDeleting={isDeleting}
 				/>
+
+				<TerritoryComment data={data} />
 
 				{!data.synced && <TerritorySync territoryId={data.id} />}
 			</DialogContent>

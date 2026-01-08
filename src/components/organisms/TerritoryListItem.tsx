@@ -79,6 +79,7 @@ export default function TerritoryListItem({
 					lastname={territory.lastname ?? undefined}
 					synced={territory.synced}
 					status={territory.status}
+					comment={territory.comment ?? undefined}
 				/>
 
 				<TerritoryFooter

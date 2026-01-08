@@ -156,6 +156,24 @@ export const useTerritories = () => {
 		setStatus("");
 	};
 
+	const updateTerritoryComment = async (
+		territoryId: number,
+		comment: string | null
+	) => {
+		setIsLoading(true);
+
+		try {
+			await TerritoriesService.updateTerritoryComment(territoryId, comment);
+			await fetchTerritoryDetails(territoryId, true);
+			await fetchTerritories(false);
+		} catch (error) {
+			console.error("Failed to update territory comment:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return {
 		fetchTerritories,
 		fetchTerritoryDetails,
@@ -163,5 +181,6 @@ export const useTerritories = () => {
 		returnTerritory,
 		territorySync,
 		deleteAssignment,
+		updateTerritoryComment,
 	};
 };
