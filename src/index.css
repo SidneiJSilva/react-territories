@@ -9,7 +9,7 @@ body {
 	height: 100%;
 	width: 100%;
 	display: flex;
-	justify-content: center; /* centraliza visualmente */
+	justify-content: center;
 	background-color: #fff;
 	font-family: Trebuchet MS, sans-serif;
 }
@@ -25,7 +25,6 @@ body {
 	-webkit-text-stroke-color: black;
 }
 
-/* Regra para o pseudo-elemento escrita separadamente */
 .territory-label::before {
 	display: none;
 }

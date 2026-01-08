@@ -33,7 +33,7 @@ export default function TerritoryListItem({
 	return (
 		<SCard
 			sx={{
-				position: "relative", // para o loading absoluto funcionar
+				position: "relative",
 				flex: {
 					xs: "1 1 100%",
 					sm: "1 1 calc(50% - 0.5rem)",
@@ -49,7 +49,7 @@ export default function TerritoryListItem({
 					: "#fff",
 				borderRadius: "1rem",
 				cursor: "pointer",
-				userSelect: "none", // evita seleção durante loading
+				userSelect: "none",
 			}}
 			onClick={handleClick}
 		>
@@ -73,13 +73,13 @@ export default function TerritoryListItem({
 				</Box>
 			)}
 
-			{/* Conteúdo normal do card */}
 			<>
 				<TerritoryHeader
 					firstname={territory.firstname ?? undefined}
 					lastname={territory.lastname ?? undefined}
 					synced={territory.synced}
 					status={territory.status}
+					comment={territory.comment ?? undefined}
 				/>
 
 				<TerritoryFooter

@@ -6,6 +6,7 @@ export interface TerritoryInterface {
 	link: string | null;
 	synced: boolean;
 	boundaries: string[] | null;
+	comment: string | null;
 
 	// Last assignment details
 	assignedat: string | null;
@@ -48,4 +49,5 @@ export interface TerritoryDetails {
 	territoryarealabel: string;
 	territorytypelabel: string;
 	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
+	comment: string | null;
 }

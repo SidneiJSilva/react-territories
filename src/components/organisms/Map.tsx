@@ -5,15 +5,13 @@ import { statusColors } from "@/constants/colors";
 import { type TerritoryInterface } from "@/interfaces";
 import { type LatLngExpression } from "leaflet";
 
-// Corrige boundaries e tipos
 const parseBoundaries = (boundaries: unknown): LatLngExpression[] => {
 	if (!Array.isArray(boundaries)) return [];
 	return boundaries
 		.filter((b): b is [number, number] => Array.isArray(b) && b.length === 2)
-		.map(([lng, lat]) => [Number(lat), Number(lng)]); // Inverte: Leaflet usa [lat, lng]
+		.map(([lng, lat]) => [Number(lat), Number(lng)]);
 };
 
-// Pega centro
 const getFirstValidCenter = (
 	territories: TerritoryInterface[]
 ): LatLngExpression => {

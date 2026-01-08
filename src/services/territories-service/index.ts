@@ -73,4 +73,17 @@ export class TerritoriesService {
 			throw new Error(`Error assigning territory: ${error.message}`);
 		}
 	}
+
+	static async updateTerritoryComment(
+		territoryId: number,
+		comment: string | null
+	) {
+		const { error } = await SupabaseService.from("territories")
+			.update({ comment })
+			.eq("id", territoryId);
+
+		if (error) {
+			throw new Error(`Error updating territory comment: ${error.message}`);
+		}
+	}
 }
