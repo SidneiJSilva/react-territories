@@ -12,7 +12,7 @@ import TerritoryReturn from "@/components/molecules/TerritoryReturn";
 import TerritoryAssign from "../molecules/TerritoryAssign";
 import TerritorySync from "../molecules/TerritorySync";
 import TerritoryComment from "./TerritoryComment";
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { useTerritories } from "@/hooks";
 import { useDialogStore } from "@/stores/dialogStore";
@@ -23,7 +23,6 @@ export default function TerritoryDialog() {
 	const { open, data, closeDialog } = useDialogStore();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [idToDelete, setIdToDelete] = useState<number | null>(null);
-	const [comment, setComment] = useState(data?.comment || "");
 	const { deleteAssignment: onDeleteAssignment } = useTerritories();
 	const { isLoading } = territoriesStore();
 
