@@ -24,7 +24,7 @@ export const useFilters = () => {
 	}
 
 	const groupTerritories = (
-		territories: TerritoryInterface[]
+		territories: TerritoryInterface[],
 	): GroupedTerritoriesAccumulator => {
 		return territories.reduce<GroupedTerritoriesAccumulator>(
 			(acc, territory) => {
@@ -36,7 +36,7 @@ export const useFilters = () => {
 				if (!acc[area]) {
 					const initialStats: Record<TerritoryStatus, number> = STATUSES.reduce(
 						(stats, status) => ({ ...stats, [status]: 0 }),
-						{} as Record<TerritoryStatus, number>
+						{} as Record<TerritoryStatus, number>,
 					);
 
 					acc[area] = {
@@ -51,7 +51,7 @@ export const useFilters = () => {
 
 				return acc;
 			},
-			{} as GroupedTerritoriesAccumulator
+			{} as GroupedTerritoriesAccumulator,
 		);
 	};
 
@@ -79,8 +79,8 @@ export const useFilters = () => {
 					(territory) =>
 						territory.peopleid === personId &&
 						territory.status !== "available" &&
-						territory.status !== "resting"
-			  )
+						territory.status !== "resting",
+				)
 			: territories;
 
 		setTerritoriesList(filteredTerritories);

@@ -38,7 +38,7 @@ export const useTerritories = () => {
 				}
 				return counts;
 			},
-			initialCounts
+			initialCounts,
 		);
 	};
 
@@ -81,7 +81,7 @@ export const useTerritories = () => {
 
 	const deleteAssignment = async (
 		assignmentId: number,
-		territoryId: number
+		territoryId: number,
 	) => {
 		setIsLoading(true);
 
@@ -100,7 +100,7 @@ export const useTerritories = () => {
 	const assignTerritory = async (
 		territoryId: number,
 		peopleId: number,
-		date: string
+		date: string,
 	) => {
 		setIsLoading(true);
 
@@ -118,7 +118,7 @@ export const useTerritories = () => {
 	const returnTerritory = async (
 		assignmentId: number,
 		territoryId: number,
-		date: string
+		date: string,
 	) => {
 		setIsLoading(true);
 
@@ -158,7 +158,7 @@ export const useTerritories = () => {
 
 	const updateTerritoryComment = async (
 		territoryId: number,
-		comment: string | null
+		comment: string | null,
 	) => {
 		setIsLoading(true);
 
@@ -166,6 +166,7 @@ export const useTerritories = () => {
 			await TerritoriesService.updateTerritoryComment(territoryId, comment);
 			await fetchTerritoryDetails(territoryId, true);
 			await fetchTerritories(false);
+			resetFilters();
 		} catch (error) {
 			console.error("Failed to update territory comment:", error);
 			throw error;
