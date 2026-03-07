@@ -3,6 +3,7 @@ import {
 	type TerritoryInterface,
 	type GroupedTerritoryArea,
 } from "@/interfaces";
+import { Filter } from "@/constants/filters";
 
 type TerritoryStatus = TerritoryInterface["status"];
 
@@ -66,13 +67,13 @@ export const useFilters = () => {
 
 		if (status) {
 			switch (status) {
-				case "no_synced":
+				case Filter.NOT_SYNCED:
 					filteredTerritories = territories.filter(
 						(t: TerritoryInterface) => !t.synced,
 					);
 					break;
 
-				case "comment":
+				case Filter.COMMENT:
 					filteredTerritories = territories.filter(
 						(t: TerritoryInterface) => t.comment,
 					);
