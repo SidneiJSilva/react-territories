@@ -3,14 +3,18 @@ import { Box, MenuItem, InputLabel, FormControl, Select } from "@mui/material";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 
 import { peopleStore } from "@/stores/peopleStore";
+import { territoriesStore } from "@/stores/territoriesStore";
 import { statusIcons } from "@/constants/statusIcons";
 import { pt } from "@/constants/lang";
 import { useFilters } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
 import { isMobileScreen } from "@/utils/screenSize";
+import Map from "@mui/icons-material/Map";
+import type { TerritoryInterface } from "@/interfaces";
 
 export default function Filters() {
 	const { people } = peopleStore();
+	const { territories } = territoriesStore();
 	const { applyStatusFilter, applyPeopleFilter } = useFilters();
 	const { personId, status, setPersonId, setStatus } = filtersStore();
 
@@ -28,8 +32,20 @@ export default function Filters() {
 		applyStatusFilter(event.target.value);
 	};
 
+	const getTerritory = (peopleid: number) => {
+		const territory = territories.find(
+			(t) => t.peopleid === peopleid && !t.returnedat,
+		);
+
+		return {
+			territory: territory as TerritoryInterface,
+			hasTerritory: !!territory,
+		};
+	};
+
 	return (
 		<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+			{/* PUBLICADOR */}
 			<Box sx={{ width: 200 }}>
 				<FormControl fullWidth size="small">
 					<InputLabel id="select-publisher-label" shrink>
@@ -46,15 +62,40 @@ export default function Filters() {
 					>
 						<MenuItem value="">Todos</MenuItem>
 
-						{people.map((person) => (
-							<MenuItem key={person.peopleid} value={person.peopleid}>
-								{person.fullname}
-							</MenuItem>
-						))}
+						{people
+							.filter((person) => person.active)
+							.map((person) => (
+								<MenuItem key={person.peopleid} value={person.peopleid}>
+									<Box
+										sx={{
+											display: "flex",
+											justifyContent: "space-between",
+											alignItems: "center",
+											width: "100%",
+										}}
+									>
+										<div>
+											<span>{person.fullname}</span>
+										</div>
+
+										{getTerritory(person.peopleid).hasTerritory && (
+											<Map
+												sx={{
+													color:
+														statusIcons[
+															getTerritory(person.peopleid).territory.status
+														].color,
+												}}
+												fontSize="small"
+											/>
+										)}
+									</Box>
+								</MenuItem>
+							))}
 					</Select>
 				</FormControl>
 			</Box>
-
+			{/* STATUS */}
 			{isMobileScreen() ? null : (
 				<Box sx={{ width: 200 }}>
 					<FormControl fullWidth size="small">
