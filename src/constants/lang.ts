@@ -5,5 +5,6 @@ export const pt = {
 		delayed_soon: "Atrasa em breve",
 		delayed: "Atrasado",
 		available: "Disponível",
+		comment: "Comentário",
 	},
 };

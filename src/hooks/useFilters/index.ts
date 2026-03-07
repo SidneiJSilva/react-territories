@@ -62,11 +62,28 @@ export const useFilters = () => {
 
 	// Apply status filter
 	const applyStatusFilter = (status: string) => {
-		const filteredTerritories = status
-			? status === "no_synced"
-				? territories.filter((territory) => !territory.synced)
-				: territories.filter((territory) => territory.status === status)
-			: territories;
+		let filteredTerritories = territories;
+
+		if (status) {
+			switch (status) {
+				case "no_synced":
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => !t.synced,
+					);
+					break;
+
+				case "comment":
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => t.comment,
+					);
+					break;
+
+				default:
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => t.status === status,
+					);
+			}
+		}
 
 		setTerritoriesList(filteredTerritories);
 		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));
