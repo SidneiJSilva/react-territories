@@ -3,6 +3,7 @@ import {
 	type TerritoryInterface,
 	type GroupedTerritoryArea,
 } from "@/interfaces";
+import { Filter } from "@/constants/filters";
 
 type TerritoryStatus = TerritoryInterface["status"];
 
@@ -62,11 +63,28 @@ export const useFilters = () => {
 
 	// Apply status filter
 	const applyStatusFilter = (status: string) => {
-		const filteredTerritories = status
-			? status === "no_synced"
-				? territories.filter((territory) => !territory.synced)
-				: territories.filter((territory) => territory.status === status)
-			: territories;
+		let filteredTerritories = territories;
+
+		if (status) {
+			switch (status) {
+				case Filter.NOT_SYNCED:
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => !t.synced,
+					);
+					break;
+
+				case Filter.COMMENT:
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => t.comment,
+					);
+					break;
+
+				default:
+					filteredTerritories = territories.filter(
+						(t: TerritoryInterface) => t.status === status,
+					);
+			}
+		}
 
 		setTerritoriesList(filteredTerritories);
 		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));

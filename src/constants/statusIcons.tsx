@@ -3,6 +3,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HotelIcon from "@mui/icons-material/Hotel";
+import Comment from "@mui/icons-material/Comment";
 
 import { statusColors } from "@/constants/colors";
 
@@ -29,5 +30,9 @@ export const statusIcons: Record<
 	resting: {
 		icon: <HotelIcon />,
 		color: statusColors.resting,
+	},
+	comment: {
+		icon: <Comment />,
+		color: statusColors.assigned,
 	},
 };
