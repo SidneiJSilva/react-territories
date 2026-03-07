@@ -3,4 +3,5 @@ export interface PeopleInterface {
 	firstname: string;
 	lastname: string;
 	fullname?: string;
+	active: boolean;
 }
