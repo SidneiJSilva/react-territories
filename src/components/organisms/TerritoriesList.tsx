@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import SCard from "@/components/atoms/cards/SCard";
 import TerritoryListItem from "@/components/organisms/TerritoryListItem";
+import { PublisherHistory } from "@/components/molecules/PublisherHistory";
 
 import { territoriesStore } from "@/stores/territoriesStore";
 import { statusIcons } from "@/constants/statusIcons";
@@ -64,7 +65,6 @@ export default function TerritoriesList() {
 					</Box>
 				</Box>
 			</SCard>
-
 			<Box
 				sx={{
 					display: "grid",
@@ -83,6 +83,10 @@ export default function TerritoriesList() {
 						territory={territory}
 					/>
 				))}
+			</Box>
+
+			<Box sx={{ marginTop: "2rem" }}>
+				<PublisherHistory />
 			</Box>
 		</Box>
 	);
