@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type TerritoryInterface } from "@/interfaces";
+import type { TerritoryInterface, PersonTerritories } from "@/interfaces";
 
 export type TerritoryStatus = TerritoryInterface["status"];
 
@@ -20,6 +20,7 @@ interface TerritoriesStore {
 	isFetchingTerritories: boolean;
 	statusCounts: TerritoryStatusStats;
 	isLoading: boolean;
+	personTerritories: PersonTerritories[];
 
 	setTerritories: (territories: TerritoryInterface[]) => void;
 	setTerritoriesList: (territories: TerritoryInterface[]) => void;
@@ -27,6 +28,7 @@ interface TerritoriesStore {
 	setIsFetchingTerritories: (isFetching: boolean) => void;
 	setStatusCounts: (counts: TerritoryStatusStats) => void;
 	setIsLoading: (isLoading: boolean) => void;
+	setPersonTerritories: (personTerritories: PersonTerritories[]) => void;
 }
 
 export const territoriesStore = create<TerritoriesStore>((set) => ({
@@ -42,6 +44,7 @@ export const territoriesStore = create<TerritoriesStore>((set) => ({
 		available: 0,
 	},
 	isLoading: false,
+	personTerritories: [],
 
 	setTerritories: (territories) => set({ territories }),
 	setTerritoriesList: (territoriesList) => set({ territoriesList }),
@@ -50,4 +53,5 @@ export const territoriesStore = create<TerritoriesStore>((set) => ({
 	setIsFetchingTerritories: (isFetching: boolean) =>
 		set({ isFetchingTerritories: isFetching }),
 	setIsLoading: (isLoading: boolean) => set({ isLoading }),
+	setPersonTerritories: (personTerritories) => set({ personTerritories }),
 }));

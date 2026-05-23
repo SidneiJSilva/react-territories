@@ -6,7 +6,7 @@ import { peopleStore } from "@/stores/peopleStore";
 import { territoriesStore } from "@/stores/territoriesStore";
 import { statusIcons } from "@/constants/statusIcons";
 import { pt } from "@/constants/lang";
-import { useFilters } from "@/hooks";
+import { useFilters, useTerritories } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
 import { isMobileScreen } from "@/utils/screenSize";
 import Map from "@mui/icons-material/Map";
@@ -17,12 +17,14 @@ export default function Filters() {
 	const { territories } = territoriesStore();
 	const { applyStatusFilter, applyPeopleFilter } = useFilters();
 	const { personId, status, setPersonId, setStatus } = filtersStore();
+	const { fetchPersonTerritories } = useTerritories();
 
 	const handlePeopleOnChange = (event: SelectChangeEvent) => {
 		setPersonId(event.target.value);
 		setStatus("");
 
 		applyPeopleFilter(parseInt(event.target.value));
+		fetchPersonTerritories(parseInt(event.target.value));
 	};
 
 	const handleStatusOnChange = (event: SelectChangeEvent) => {

@@ -13,6 +13,7 @@ export const useTerritories = () => {
 		setStatusCounts,
 		setTerritoriesList,
 		setIsLoading,
+		setPersonTerritories,
 	} = territoriesStore();
 
 	const { groupedByAreaWithStats } = useFilters();
@@ -175,6 +176,21 @@ export const useTerritories = () => {
 		}
 	};
 
+	const fetchPersonTerritories = async (peopleId: number) => {
+		setIsLoading(true);
+
+		try {
+			const personTerritories =
+				await TerritoriesService.fetchPersonTerritories(peopleId);
+			setPersonTerritories(personTerritories);
+		} catch (error) {
+			console.error("Failed to fetch person's territories:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return {
 		fetchTerritories,
 		fetchTerritoryDetails,
@@ -183,5 +199,6 @@ export const useTerritories = () => {
 		territorySync,
 		deleteAssignment,
 		updateTerritoryComment,
+		fetchPersonTerritories,
 	};
 };

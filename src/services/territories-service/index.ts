@@ -1,4 +1,8 @@
-import type { TerritoryInterface, TerritoryDetails } from "@/interfaces";
+import type {
+	TerritoryInterface,
+	TerritoryDetails,
+	PersonTerritories,
+} from "@/interfaces";
 import SupabaseService from "@/services/supabase-service";
 
 const TABLE_NAME = "territories_view";
@@ -30,7 +34,7 @@ export class TerritoriesService {
 	static async assignTerritory(
 		territoryId: number,
 		peopleId: number,
-		date: string
+		date: string,
 	) {
 		const { error } = await SupabaseService.from("assignments").insert({
 			"territory-id": territoryId,
@@ -76,7 +80,7 @@ export class TerritoriesService {
 
 	static async updateTerritoryComment(
 		territoryId: number,
-		comment: string | null
+		comment: string | null,
 	) {
 		const { error } = await SupabaseService.from("territories")
 			.update({ comment })
@@ -85,5 +89,20 @@ export class TerritoriesService {
 		if (error) {
 			throw new Error(`Error updating territory comment: ${error.message}`);
 		}
+	}
+
+	static async fetchPersonTerritories(peopleId: number) {
+		const { data, error } = await SupabaseService.rpc(
+			"get_person_territories",
+			{
+				people_id: peopleId,
+			},
+		);
+
+		if (error) {
+			throw new Error(`Error fetching person's territories: ${error.message}`);
+		}
+
+		return data as unknown as PersonTerritories[];
 	}
 }
