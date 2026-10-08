@@ -3,6 +3,8 @@ export interface TerritoryInterface {
 	number: number;
 	territoryarea: string;
 	territorytype: string;
+	territory_area: string;
+	territory_type: string;
 	link: string | null;
 	synced: boolean;
 	boundaries: string[] | null;
@@ -13,14 +15,19 @@ export interface TerritoryInterface {
 	returnedat: string | null;
 
 	// People details
-	peopleid: number | null;
+	peopleid?: number | null;
+	assignment_person_id: number;
 	firstname: string | null;
 	lastname: string | null;
+	first_name: string | null;
+	last_name: string | null;
 
 	// Status and delay information
 	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
 	daystodelay: number | null;
 	delayedbydays: number | null;
+	days_to_delay: number | null;
+	delayed_by_days: number | null;
 }
 
 export interface GroupedTerritoryArea {
@@ -34,6 +41,7 @@ export interface Assignment {
 	campaign: boolean;
 	firstName: string;
 	id: number;
+	assignmentId: number;
 	lastName: string;
 	peopleId: number;
 	returnedAt: string | null;
@@ -48,6 +56,8 @@ export interface TerritoryDetails {
 	synced: boolean;
 	territoryarealabel: string;
 	territorytypelabel: string;
+	territory_area: string;
+	territory_type: string;
 	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
 	comment: string | null;
 }

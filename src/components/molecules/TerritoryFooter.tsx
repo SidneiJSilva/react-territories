@@ -8,7 +8,7 @@ export function TerritoryFooter({
 	number,
 	link,
 	isDarkText,
-	territoryarea,
+	territory_area,
 }: {
 	status: "assigned" | "resting" | "delayed_soon" | "delayed" | "available";
 	delayedbydays?: number;
@@ -16,7 +16,7 @@ export function TerritoryFooter({
 	number: number;
 	link?: string;
 	isDarkText: boolean;
-	territoryarea?: string;
+	territory_area?: string;
 }) {
 	return (
 		<Box
@@ -50,7 +50,7 @@ export function TerritoryFooter({
 						window.open(link, "BLANK");
 					}}
 				>
-					{territoryarea}
+					{territory_area}
 				</Typography>
 
 				<Typography

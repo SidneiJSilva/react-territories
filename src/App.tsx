@@ -1,15 +1,20 @@
-// App.tsx
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Box } from "@mui/material";
+import { configureApi } from "@/services/api-service";
 import TerritoryDialog from "./components/organisms/TerritoryDialog";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 
 type AppProps = {
 	children: ReactNode;
+	getToken?: () => Promise<string | null>;
 };
 
-function App({ children }: AppProps) {
+function App({ children, getToken }: AppProps) {
+	if (getToken) {
+		configureApi(getToken);
+	}
+
 	return (
 		<Box
 			component="main"
@@ -21,7 +26,6 @@ function App({ children }: AppProps) {
 			}}
 		>
 			{children}
-
 			<TerritoryDialog />
 		</Box>
 	);

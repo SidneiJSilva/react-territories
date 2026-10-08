@@ -4,11 +4,11 @@ import { useDialogStore } from "@/stores/dialogStore";
 import { useFilters } from "@/hooks";
 import { filtersStore } from "@/stores/filtersStore";
 import { type TerritoryStatusStats } from "@/stores/territoriesStore";
+import type { TerritoryInterface } from "@/interfaces";
 
 export const useTerritories = () => {
 	const {
 		setTerritories,
-		setGroupedTerritories,
 		setIsFetchingTerritories,
 		setStatusCounts,
 		setTerritoriesList,
@@ -16,7 +16,9 @@ export const useTerritories = () => {
 		setPersonTerritories,
 	} = territoriesStore();
 
-	const { groupedByAreaWithStats } = useFilters();
+	const { applyStatusFilter, applyPeopleFilter } = useFilters();
+
+	const { personId, status } = filtersStore();
 
 	interface Territory {
 		id: number;
@@ -47,17 +49,26 @@ export const useTerritories = () => {
 		if (showLoading) setIsFetchingTerritories(true);
 
 		try {
-			const territories = await TerritoriesService.fetchTerritories();
+			const territories = await TerritoriesService.fetchTerritoriesRasp();
 
-			setStatusCounts(statusCounts(territories));
-			setTerritories(territories);
-			setTerritoriesList(territories);
-			setGroupedTerritories(groupedByAreaWithStats(territories));
+			await setStatusCounts(statusCounts(territories));
+			await setTerritories(territories);
+			updateTerritoriesList(territories);
 		} catch (error) {
 			console.error("Failed to fetch territories:", error);
 			throw error;
 		} finally {
 			if (showLoading) setIsFetchingTerritories(false);
+		}
+	};
+
+	const updateTerritoriesList = (territories: TerritoryInterface[]) => {
+		if (personId) {
+			applyPeopleFilter(Number(personId) || 0, territories);
+		} else if (status) {
+			applyStatusFilter(status, territories);
+		} else {
+			setTerritoriesList(territories);
 		}
 	};
 
@@ -87,7 +98,7 @@ export const useTerritories = () => {
 		setIsLoading(true);
 
 		try {
-			await TerritoriesService.deleteAssignment(assignmentId);
+			await TerritoriesService.deleteAssignmentRasp(assignmentId);
 			await fetchTerritories(false);
 			await fetchTerritoryDetails(territoryId, true);
 		} catch (error) {
@@ -106,8 +117,9 @@ export const useTerritories = () => {
 		setIsLoading(true);
 
 		try {
-			await TerritoriesService.assignTerritory(territoryId, peopleId, date);
-			await territorySync(false, territoryId);
+			await TerritoriesService.assignTerritoryRasp(territoryId, peopleId, date);
+			await fetchTerritories(false);
+			await fetchTerritoryDetails(territoryId, true);
 		} catch (error) {
 			console.error("Failed to assign territory:", error);
 			throw error;
@@ -124,8 +136,9 @@ export const useTerritories = () => {
 		setIsLoading(true);
 
 		try {
-			await TerritoriesService.returnTerritory(assignmentId, date);
-			await territorySync(false, territoryId);
+			await TerritoriesService.returnTerritoryRasp(assignmentId, date);
+			await fetchTerritories(false);
+			await fetchTerritoryDetails(territoryId, true);
 		} catch (error) {
 			console.error("Failed to return territory:", error);
 			throw error;
@@ -138,23 +151,15 @@ export const useTerritories = () => {
 		setIsLoading(true);
 
 		try {
-			await TerritoriesService.territorySync(synced, territoryId);
+			await TerritoriesService.territorySyncRasp(synced, territoryId);
 			await fetchTerritoryDetails(territoryId, true);
 			await fetchTerritories(false);
-			resetFilters();
 		} catch (error) {
 			console.error("Failed to sync territory:", error);
 			throw error;
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const { setPersonId, setStatus } = filtersStore();
-
-	const resetFilters = () => {
-		setPersonId("");
-		setStatus("");
 	};
 
 	const updateTerritoryComment = async (
@@ -167,7 +172,6 @@ export const useTerritories = () => {
 			await TerritoriesService.updateTerritoryComment(territoryId, comment);
 			await fetchTerritoryDetails(territoryId, true);
 			await fetchTerritories(false);
-			resetFilters();
 		} catch (error) {
 			console.error("Failed to update territory comment:", error);
 			throw error;
@@ -181,7 +185,7 @@ export const useTerritories = () => {
 
 		try {
 			const personTerritories =
-				await TerritoriesService.fetchPersonTerritories(peopleId);
+				await TerritoriesService.fetchPersonTerritoriesRasp(peopleId);
 			setPersonTerritories(personTerritories);
 		} catch (error) {
 			console.error("Failed to fetch person's territories:", error);

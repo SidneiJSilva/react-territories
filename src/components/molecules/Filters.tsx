@@ -20,11 +20,15 @@ export default function Filters() {
 	const { fetchPersonTerritories } = useTerritories();
 
 	const handlePeopleOnChange = (event: SelectChangeEvent) => {
-		setPersonId(event.target.value);
-		setStatus("");
+		const personIdValue = parseInt(event.target.value) || "";
 
-		applyPeopleFilter(parseInt(event.target.value));
-		fetchPersonTerritories(parseInt(event.target.value));
+		setPersonId(personIdValue.toString());
+		setStatus("");
+		applyPeopleFilter(personIdValue || 0, territories);
+
+		if (personIdValue) {
+			fetchPersonTerritories(parseInt(event.target.value));
+		}
 	};
 
 	const handleStatusOnChange = (event: SelectChangeEvent) => {

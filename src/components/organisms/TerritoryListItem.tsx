@@ -75,8 +75,8 @@ export default function TerritoryListItem({
 
 			<>
 				<TerritoryHeader
-					firstname={territory.firstname ?? undefined}
-					lastname={territory.lastname ?? undefined}
+					firstname={territory.first_name ?? undefined}
+					lastname={territory.last_name ?? undefined}
 					synced={territory.synced}
 					status={territory.status}
 					comment={territory.comment ?? undefined}
@@ -84,12 +84,12 @@ export default function TerritoryListItem({
 
 				<TerritoryFooter
 					status={territory.status}
-					delayedbydays={territory.delayedbydays ?? undefined}
-					daystodelay={territory.daystodelay ?? undefined}
+					delayedbydays={territory.delayed_by_days ?? undefined}
+					daystodelay={territory.days_to_delay ?? undefined}
 					number={territory.number}
 					link={territory.link ?? undefined}
 					isDarkText={isDarkText}
-					territoryarea={from === "list" ? territory.territoryarea : ""}
+					territory_area={from === "list" ? territory.territory_area : ""}
 				/>
 			</>
 		</SCard>
