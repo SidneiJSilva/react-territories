@@ -7,7 +7,7 @@ export const usePeople = () => {
 
 	const fetchPeople = async () => {
 		try {
-			const people = await PeopleService.fetchPeople();
+			const people = await PeopleService.fetchPeopleRasp();
 
 			const fullNamePeople = people.map((person: PeopleInterface) => ({
 				...person,

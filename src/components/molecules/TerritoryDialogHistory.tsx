@@ -20,6 +20,7 @@ type Assignment = {
 	campaign: boolean;
 	firstName: string;
 	id: number;
+	assignmentId: number;
 	lastName: string;
 	peopleId: number;
 	returnedAt: string | null;
@@ -73,7 +74,7 @@ export default function TerritoryDialogHistory({
 
 						<TableBody>
 							{assignments.map((assignment) => (
-								<TableRow key={assignment.id}>
+								<TableRow key={assignment.assignmentId}>
 									<TableCell>
 										<Typography variant="body2">
 											{assignment.firstName} {assignment.lastName}
@@ -102,7 +103,7 @@ export default function TerritoryDialogHistory({
 											aria-label="delete"
 											color="error"
 											size="small"
-											onClick={() => onDelete?.(assignment.id)}
+											onClick={() => onDelete?.(assignment.assignmentId)}
 										>
 											<DeleteIcon />
 										</IconButton>

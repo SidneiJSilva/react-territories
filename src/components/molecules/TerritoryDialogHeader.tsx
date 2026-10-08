@@ -32,7 +32,7 @@ export default function TerritoryDialogHeader({
 					justifyContent: "space-between",
 				}}
 			>
-				<div>{`${data.territoryarealabel} - ${data.territorytypelabel}`}</div>
+				<div>{`${data.territory_area} - ${data.territory_type}`}</div>
 
 				<Box
 					onClick={handleCopy}

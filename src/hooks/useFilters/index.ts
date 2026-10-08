@@ -8,8 +8,7 @@ import { Filter } from "@/constants/filters";
 type TerritoryStatus = TerritoryInterface["status"];
 
 export const useFilters = () => {
-	const { territories, setGroupedTerritories, setTerritoriesList } =
-		territoriesStore();
+	const { territories, setTerritoriesList } = territoriesStore();
 
 	// GROUP TERRITORIES
 	const STATUSES: TerritoryStatus[] = [
@@ -29,10 +28,10 @@ export const useFilters = () => {
 	): GroupedTerritoriesAccumulator => {
 		return territories.reduce<GroupedTerritoriesAccumulator>(
 			(acc, territory) => {
-				const isComercial: boolean = territory.territorytype === "Comercial";
+				const isComercial: boolean = territory.territory_type === "Comercial";
 				const area: string = isComercial
 					? "Comercial"
-					: territory.territoryarea || "Sem área";
+					: territory.territory_area || "Sem área";
 
 				if (!acc[area]) {
 					const initialStats: Record<TerritoryStatus, number> = STATUSES.reduce(
@@ -62,47 +61,58 @@ export const useFilters = () => {
 	};
 
 	// Apply status filter
-	const applyStatusFilter = (status: string) => {
-		let filteredTerritories = territories;
+	const applyStatusFilter = (
+		status: string,
+		territoriesUpdated?: TerritoryInterface[],
+	) => {
+		const territoriesSource = territoriesUpdated
+			? territoriesUpdated
+			: territories;
+		let filteredTerritories: TerritoryInterface[] = territoriesSource;
 
 		if (status) {
 			switch (status) {
 				case Filter.NOT_SYNCED:
-					filteredTerritories = territories.filter(
+					filteredTerritories = territoriesSource.filter(
 						(t: TerritoryInterface) => !t.synced,
 					);
 					break;
 
 				case Filter.COMMENT:
-					filteredTerritories = territories.filter(
+					filteredTerritories = territoriesSource.filter(
 						(t: TerritoryInterface) => t.comment,
 					);
 					break;
 
 				default:
-					filteredTerritories = territories.filter(
+					filteredTerritories = territoriesSource.filter(
 						(t: TerritoryInterface) => t.status === status,
 					);
 			}
 		}
 
 		setTerritoriesList(filteredTerritories);
-		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));
 	};
 
 	// Apply person filter
-	const applyPeopleFilter = (personId: number) => {
+	const applyPeopleFilter = (
+		personId: number,
+		territoriesUpdated?: TerritoryInterface[],
+	) => {
+		const territoriesToFilter = territoriesUpdated
+			? territoriesUpdated
+			: territories;
+
 		const filteredTerritories = personId
-			? territories.filter(
+			? territoriesToFilter.filter(
 					(territory) =>
-						territory.peopleid === personId &&
+						Number(territory.assignment_person_id) === personId &&
 						territory.status !== "available" &&
 						territory.status !== "resting",
 				)
-			: territories;
+			: territoriesToFilter;
 
 		setTerritoriesList(filteredTerritories);
-		setGroupedTerritories(groupedByAreaWithStats(filteredTerritories));
 	};
 
 	return { groupedByAreaWithStats, applyStatusFilter, applyPeopleFilter };
