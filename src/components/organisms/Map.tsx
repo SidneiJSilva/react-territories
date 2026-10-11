@@ -13,7 +13,7 @@ const parseBoundaries = (boundaries: unknown): LatLngExpression[] => {
 };
 
 const getFirstValidCenter = (
-	territories: TerritoryInterface[]
+	territories: TerritoryInterface[],
 ): LatLngExpression => {
 	for (const t of territories) {
 		const coords = parseBoundaries(t.boundaries);
@@ -25,7 +25,7 @@ const getFirstValidCenter = (
 export default function Map() {
 	const { territories } = territoriesStore();
 	const residentialTerritories = territories.filter(
-		(t) => t.territorytype === "Residencial"
+		(t) => t.territory_type === "Residencial",
 	);
 
 	const center = getFirstValidCenter(residentialTerritories);
