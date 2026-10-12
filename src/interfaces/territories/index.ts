@@ -60,4 +60,5 @@ export interface TerritoryDetails {
 	territory_type: string;
 	status: "assigned" | "resting" | "delayed" | "delayed_soon" | "available";
 	comment: string | null;
+	comments: [];
 }

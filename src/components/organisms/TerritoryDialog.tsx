@@ -11,7 +11,7 @@ import TerritoryDialogHeader from "../molecules/TerritoryDialogHeader";
 import TerritoryReturn from "@/components/molecules/TerritoryReturn";
 import TerritoryAssign from "../molecules/TerritoryAssign";
 import TerritorySync from "../molecules/TerritorySync";
-import TerritoryComment from "./TerritoryComment";
+import TerritoryComments from "./TerritoryComments";
 import { Box, Typography } from "@mui/material";
 
 import { useTerritories } from "@/hooks";
@@ -83,7 +83,10 @@ export default function TerritoryDialog() {
 					isDeleting={isDeleting}
 				/>
 
-				<TerritoryComment data={data} />
+				<TerritoryComments
+					territoryId={data.id}
+					comments={data.comments ?? []}
+				/>
 
 				{!data.synced && <TerritorySync territoryId={data.id} />}
 			</DialogContent>

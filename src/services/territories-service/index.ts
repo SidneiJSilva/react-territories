@@ -117,8 +117,6 @@ export class TerritoriesService {
 			const error = await response.json();
 			throw new Error(error.error || "Error assigning territory");
 		}
-
-		return response.json();
 	}
 
 	static async addTerritoryComment(territoryId: number, comment: string) {

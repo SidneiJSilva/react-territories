@@ -194,7 +194,7 @@ export const useTerritories = () => {
 		}
 	};
 
-	const deleteteTerritoryComment = async (
+	const deleteTerritoryComment = async (
 		territoryId: number,
 		commentId: number,
 	) => {
@@ -234,7 +234,7 @@ export const useTerritories = () => {
 		deleteAssignment,
 		updateTerritoryComment,
 		fetchPersonTerritories,
-		deleteteTerritoryComment,
+		deleteTerritoryComment,
 		addTerritoryComment,
 	};
 };
