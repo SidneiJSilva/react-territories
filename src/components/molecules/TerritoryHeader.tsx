@@ -1,14 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { SyncStatus } from "@/components/atoms/SyncStatus";
 import { StatusIcon } from "@/components/atoms/icons/StatusIcon";
-import { Comment } from "@mui/icons-material";
 
 export function TerritoryHeader({
 	firstname,
 	lastname,
 	synced,
 	status,
-	comment,
 }: {
 	firstname?: string;
 	lastname?: string;
@@ -34,8 +32,6 @@ export function TerritoryHeader({
 			</Box>
 
 			<Box display="flex" gap={1} alignItems="center">
-				{comment && <Comment />}
-
 				<StatusIcon status={status} />
 			</Box>
 		</Box>

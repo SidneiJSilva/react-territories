@@ -17,7 +17,6 @@ export const useTerritories = () => {
 	} = territoriesStore();
 
 	const { applyStatusFilter, applyPeopleFilter } = useFilters();
-
 	const { personId, status } = filtersStore();
 
 	interface Territory {
@@ -195,6 +194,37 @@ export const useTerritories = () => {
 		}
 	};
 
+	const deleteTerritoryComment = async (
+		territoryId: number,
+		commentId: number,
+	) => {
+		setIsLoading(true);
+
+		try {
+			await TerritoriesService.deleteTerritoryComment(territoryId, commentId);
+			await fetchTerritoryDetails(territoryId, true);
+		} catch (error) {
+			console.error("Failed to delete territory comment:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const addTerritoryComment = async (territoryId: number, comment: string) => {
+		setIsLoading(true);
+
+		try {
+			await TerritoriesService.addTerritoryComment(territoryId, comment);
+			await fetchTerritoryDetails(territoryId, true);
+		} catch (error) {
+			console.error("Failed to add territory comment:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return {
 		fetchTerritories,
 		fetchTerritoryDetails,
@@ -204,5 +234,7 @@ export const useTerritories = () => {
 		deleteAssignment,
 		updateTerritoryComment,
 		fetchPersonTerritories,
+		deleteTerritoryComment,
+		addTerritoryComment,
 	};
 };

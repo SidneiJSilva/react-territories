@@ -102,6 +102,45 @@ export class TerritoriesService {
 		return response.json();
 	}
 
+	static async deleteTerritoryComment(territoryId: number, commentId: number) {
+		const response = await apiFetch(
+			`${import.meta.env.VITE_API_URL}/territories/${territoryId}/comments/${commentId}`,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+
+		if (!response.ok) {
+			const error = await response.json();
+			throw new Error(error.error || "Error assigning territory");
+		}
+	}
+
+	static async addTerritoryComment(territoryId: number, comment: string) {
+		const response = await apiFetch(
+			`${import.meta.env.VITE_API_URL}/territories/${territoryId}/comments`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					comment,
+				}),
+			},
+		);
+
+		if (!response.ok) {
+			const error = await response.json();
+			throw new Error(error.error || "Error assigning territory");
+		}
+
+		return response.json();
+	}
+
 	static async territorySync(synced: boolean, territoryId: number) {
 		const { error } = await SupabaseService.from("territories")
 			.update({ synced })
