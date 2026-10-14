@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 
@@ -10,9 +10,6 @@ export function SyncStatus({ synced }: { synced: boolean }) {
 			) : (
 				<CloudOutlinedIcon sx={{ fontSize: 10 }} />
 			)}
-			<Typography sx={{ fontSize: 10 }}>
-				{synced ? "Sincronizado" : "Não sincronizado"}
-			</Typography>
 		</Box>
 	);
 }

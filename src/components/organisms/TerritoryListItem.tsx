@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import SCard from "@/components/atoms/cards/SCard";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { StatusIcon } from "@/components/atoms/icons/StatusIcon";
 import { SyncStatus } from "@/components/atoms/SyncStatus";
+import { Map as MapIcon } from "@mui/icons-material";
+import SCard from "@/components/atoms/cards/SCard";
 
 import { type TerritoryInterface } from "@/interfaces";
 import {
@@ -18,7 +19,10 @@ export default function TerritoryListItem({
 	territory: TerritoryInterface;
 	from: "list" | "group";
 }) {
-	const { fetchTerritoryDetails } = useTerritories();
+	const {
+		fetchTerritoryDetails,
+		// returnTerritory
+	} = useTerritories();
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +34,10 @@ export default function TerritoryListItem({
 			setIsLoading(false);
 		}
 	};
+
+	// const handleReturn = async () => {
+	// 	await returnTerritory(data.assignmentid, data.id, date?.toString() || "");
+	// };
 
 	return (
 		<div>
@@ -140,6 +148,7 @@ export default function TerritoryListItem({
 							flexDirection: "row",
 							alignItems: "center",
 							gap: "1rem",
+							marginBottom: "1rem",
 						}}
 					>
 						<Box
@@ -151,8 +160,8 @@ export default function TerritoryListItem({
 								display: "flex",
 								justifyContent: "center",
 								alignItems: "center",
-								width: "3.2rem",
-								height: "3.2rem",
+								width: "3.0rem",
+								height: "3.0rem",
 							}}
 						>
 							<StatusIcon status={territory.status} />
@@ -221,6 +230,48 @@ export default function TerritoryListItem({
 								</Box>
 							)}
 						</Box>
+					</Box>
+
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "space-between",
+							alignItems: "center",
+							borderTop: "1px solid #f0f0f0",
+							paddingTop: "1rem",
+						}}
+					>
+						<Button
+							variant="outlined"
+							size="small"
+							sx={{
+								color: statusColors["common"],
+								backgroundColor: statusBgColors["common"],
+								borderColor: statusBorderColors["common"],
+								borderRadius: ".5rem",
+							}}
+							startIcon={<MapIcon />}
+						>
+							Mapa
+						</Button>
+
+						{(territory.status === "assigned" ||
+							territory.status === "delayed_soon" ||
+							territory.status === "delayed") && (
+							<Button
+								variant="outlined"
+								size="small"
+								sx={{
+									color: statusColors["common"],
+									backgroundColor: statusBgColors["common"],
+									borderColor: statusBorderColors["common"],
+									borderRadius: ".5rem",
+								}}
+							>
+								Devolver
+							</Button>
+						)}
 					</Box>
 				</>
 			</SCard>
