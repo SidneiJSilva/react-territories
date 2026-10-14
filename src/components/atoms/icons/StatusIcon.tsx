@@ -1,21 +1,21 @@
 import {
-	CheckCircle as CheckCircleIcon,
+	Check as CheckIcon,
 	WarningAmber as WarningAmberIcon,
-	Nightlight as NightlightIcon,
+	NightsStay as NightsStayIcon,
 	Person as PersonIcon,
 } from "@mui/icons-material";
 
 export function StatusIcon({ status }: { status: string }) {
 	switch (status) {
 		case "available":
-			return <CheckCircleIcon fontSize="large" />;
+			return <CheckIcon sx={{ fontSize: "2.5rem" }} />;
 		case "assigned":
-			return <PersonIcon fontSize="large" />;
+			return <PersonIcon sx={{ fontSize: "2.5rem" }} />;
 		case "delayed":
 		case "delayed_soon":
-			return <WarningAmberIcon fontSize="large" />;
+			return <WarningAmberIcon sx={{ fontSize: "2.5rem" }} />;
 		case "resting":
-			return <NightlightIcon fontSize="large" />;
+			return <NightsStayIcon sx={{ fontSize: "2.5rem" }} />;
 		default:
 			return null;
 	}

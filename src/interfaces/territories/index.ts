@@ -28,6 +28,7 @@ export interface TerritoryInterface {
 	delayedbydays: number | null;
 	days_to_delay: number | null;
 	delayed_by_days: number | null;
+	worked_days: number | null;
 }
 
 export interface GroupedTerritoryArea {
