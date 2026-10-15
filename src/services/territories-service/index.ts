@@ -183,6 +183,22 @@ export class TerritoriesService {
 		}
 	}
 
+	static async returnTerritoryById(territoryId: number) {
+		const response = await apiFetch(
+			`${import.meta.env.VITE_API_URL}/territories/${territoryId}/return`,
+			{
+				method: "PATCH",
+			},
+		);
+
+		if (!response.ok) {
+			const error = await response.json();
+			throw new Error(error.error || "Error returning territory");
+		}
+
+		return response.json();
+	}
+
 	static async returnTerritoryRasp(assignmentId: number, date: string) {
 		const response = await apiFetch(
 			`${import.meta.env.VITE_API_URL}/assignments/${assignmentId}/return`,

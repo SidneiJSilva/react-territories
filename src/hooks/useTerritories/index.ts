@@ -127,6 +127,20 @@ export const useTerritories = () => {
 		}
 	};
 
+	const returnTerritoryById = async (territoryId: number) => {
+		setIsLoading(true);
+
+		try {
+			await TerritoriesService.returnTerritoryById(territoryId);
+			await fetchTerritories(false);
+		} catch (error) {
+			console.error("Failed to return territory:", error);
+			throw error;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	const returnTerritory = async (
 		assignmentId: number,
 		territoryId: number,
@@ -236,5 +250,6 @@ export const useTerritories = () => {
 		fetchPersonTerritories,
 		deleteTerritoryComment,
 		addTerritoryComment,
+		returnTerritoryById,
 	};
 };

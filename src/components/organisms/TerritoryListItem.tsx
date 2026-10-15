@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { StatusIcon } from "@/components/atoms/icons/StatusIcon";
 import { SyncStatus } from "@/components/atoms/SyncStatus";
-import { Map as MapIcon } from "@mui/icons-material";
+import {
+	Map as MapIcon,
+	Sync as SyncIcon,
+	Publish as PublishIcon,
+} from "@mui/icons-material";
 import SCard from "@/components/atoms/cards/SCard";
 
 import { type TerritoryInterface } from "@/interfaces";
@@ -19,10 +23,8 @@ export default function TerritoryListItem({
 	territory: TerritoryInterface;
 	from: "list" | "group";
 }) {
-	const {
-		fetchTerritoryDetails,
-		// returnTerritory
-	} = useTerritories();
+	const { fetchTerritoryDetails, returnTerritoryById, territorySync } =
+		useTerritories();
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -35,9 +37,23 @@ export default function TerritoryListItem({
 		}
 	};
 
-	// const handleReturn = async () => {
-	// 	await returnTerritory(data.assignmentid, data.id, date?.toString() || "");
-	// };
+	const handleReturn = async () => {
+		setIsLoading(true);
+		try {
+			await returnTerritoryById(territory.id);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const handleSync = async () => {
+		setIsLoading(true);
+		try {
+			await territorySync(true, territory.id);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<div>
@@ -252,9 +268,34 @@ export default function TerritoryListItem({
 								borderRadius: ".5rem",
 							}}
 							startIcon={<MapIcon />}
+							onClick={(evt) => {
+								evt.stopPropagation();
+								if (!territory.link) return;
+								window.open(territory.link, "BLANK");
+							}}
 						>
 							Mapa
 						</Button>
+
+						{!territory.synced && (
+							<Button
+								variant="outlined"
+								size="small"
+								sx={{
+									color: statusColors["common"],
+									backgroundColor: statusBgColors["common"],
+									borderColor: statusBorderColors["common"],
+									borderRadius: ".5rem",
+								}}
+								startIcon={<SyncIcon />}
+								onClick={(evt) => {
+									evt.stopPropagation();
+									handleSync();
+								}}
+							>
+								Sync
+							</Button>
+						)}
 
 						{(territory.status === "assigned" ||
 							territory.status === "delayed_soon" ||
@@ -267,6 +308,11 @@ export default function TerritoryListItem({
 									backgroundColor: statusBgColors["common"],
 									borderColor: statusBorderColors["common"],
 									borderRadius: ".5rem",
+								}}
+								startIcon={<PublishIcon />}
+								onClick={(evt) => {
+									evt.stopPropagation();
+									handleReturn();
 								}}
 							>
 								Devolver
