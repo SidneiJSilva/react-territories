@@ -1,4 +1,5 @@
-import { Box, DialogTitle } from "@mui/material";
+import { Box, DialogTitle, Typography, IconButton } from "@mui/material";
+import { Link as LinkIcon } from "@mui/icons-material";
 import type { TerritoryDetails } from "@/interfaces";
 import { statusColors } from "@/constants/colors";
 
@@ -7,8 +8,6 @@ export default function TerritoryDialogHeader({
 }: {
 	data: TerritoryDetails;
 }) {
-	const isDarkText = data.status === "delayed_soon";
-
 	const handleCopy = () => {
 		if (data.link) {
 			navigator.clipboard.writeText(data.link).then(() => {
@@ -19,37 +18,63 @@ export default function TerritoryDialogHeader({
 	};
 
 	return (
-		<DialogTitle
-			sx={{
-				backgroundColor: statusColors[data.status],
-				color: isDarkText ? "black" : "white",
-			}}
-		>
+		<DialogTitle>
 			<Box
 				sx={{
 					display: "flex",
-					alignItems: "center",
+					flexDirection: "row",
 					justifyContent: "space-between",
+					alignItems: "center",
 				}}
 			>
-				<div>{`${data.territory_area} - ${data.territory_type}`}</div>
-
 				<Box
-					onClick={handleCopy}
 					sx={{
-						cursor: "pointer",
-						backgroundColor: "white",
-						color: isDarkText ? "black" : statusColors[data.status],
-						width: "40px",
-						height: "40px",
 						display: "flex",
+						flexDirection: "row",
 						alignItems: "center",
-						justifyContent: "center",
-						borderRadius: "100%",
+						gap: "0.5rem",
 					}}
 				>
-					{data.number}
+					<Box
+						sx={{
+							borderRadius: ".5rem",
+							backgroundColor: statusColors[data.status],
+							textAlign: "center",
+							paddingLeft: "0.5rem",
+							paddingRight: "0.5rem",
+						}}
+					>
+						<Typography
+							variant="h5"
+							component="span"
+							sx={{ color: "#fff", fontWeight: "bold" }}
+						>
+							{data.number}
+						</Typography>
+					</Box>
+
+					<Box>
+						<Typography
+							variant="h6"
+							component="div"
+							sx={{ fontWeight: "bold", lineHeight: 1.2 }}
+						>
+							{data.territory_area}
+						</Typography>
+
+						<Typography
+							variant="caption"
+							component="div"
+							sx={{ color: "#898888fb", lineHeight: 1.2 }}
+						>
+							{data.territory_type}
+						</Typography>
+					</Box>
 				</Box>
+
+				<IconButton onClick={handleCopy}>
+					<LinkIcon />
+				</IconButton>
 			</Box>
 		</DialogTitle>
 	);
