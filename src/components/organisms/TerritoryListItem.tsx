@@ -71,7 +71,7 @@ export default function TerritoryListItem({
 					boxSizing: "border-box",
 					borderRadius: ".5rem",
 					borderLeft: "8px solid",
-					borderColor: statusColors[territory.status],
+					borderColor: statusBorderColors[territory.status],
 					cursor: "pointer",
 					userSelect: "none",
 				}}
