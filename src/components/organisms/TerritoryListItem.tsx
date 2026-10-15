@@ -133,11 +133,7 @@ export default function TerritoryListItem({
 								</Typography>
 							</Box>
 
-							<Typography
-								variant="h6"
-								component="span"
-								sx={{ fontWeight: "bold" }}
-							>
+							<Typography variant="h6" component="span">
 								{territory.territory_area}
 							</Typography>
 						</Box>
@@ -207,7 +203,6 @@ export default function TerritoryListItem({
 										variant="caption"
 										component="span"
 										sx={{
-											fontWeight: "bold",
 											color: statusColors[territory.status],
 										}}
 									>
@@ -222,7 +217,6 @@ export default function TerritoryListItem({
 										variant="caption"
 										component="span"
 										sx={{
-											fontWeight: "bold",
 											color: statusColors[territory.status],
 										}}
 									>
@@ -237,7 +231,6 @@ export default function TerritoryListItem({
 										variant="caption"
 										component="span"
 										sx={{
-											fontWeight: "bold",
 											color: statusColors[territory.status],
 										}}
 									>
