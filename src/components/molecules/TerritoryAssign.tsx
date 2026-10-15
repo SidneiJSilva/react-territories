@@ -47,8 +47,8 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 				gap: 2,
 				padding: 2,
 				border: "2px solid",
-				backgroundColor: cardColors.background,
-				borderColor: cardColors.border,
+				backgroundColor: cardColors.green.background,
+				borderColor: cardColors.green.border,
 				borderRadius: "2rem",
 			}}
 		>
@@ -104,16 +104,16 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 							borderRadius: "1.25rem",
 
 							"& .MuiOutlinedInput-notchedOutline": {
-								borderColor: cardColors.border,
+								borderColor: cardColors.green.border,
 								borderWidth: "1.5px",
 							},
 
 							"&:hover .MuiOutlinedInput-notchedOutline": {
-								borderColor: cardColors.primary,
+								borderColor: cardColors.green.primary,
 							},
 
 							"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-								borderColor: cardColors.primary,
+								borderColor: cardColors.green.primary,
 								borderWidth: "2px",
 							},
 						},
@@ -123,7 +123,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 						},
 
 						"& .MuiInputLabel-root.Mui-focused": {
-							color: cardColors.primary,
+							color: cardColors.green.primary,
 						},
 
 						"& .MuiSelect-select": {
@@ -150,7 +150,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 								sx: {
 									mt: 1,
 									borderRadius: "1rem",
-									border: `1px solid ${cardColors.border}`,
+									border: `1px solid ${cardColors.green.border}`,
 									boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)",
 
 									"& .MuiMenuItem-root": {
@@ -160,11 +160,11 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 									},
 
 									"& .MuiMenuItem-root.Mui-selected": {
-										backgroundColor: cardColors.surfaceHover,
+										backgroundColor: cardColors.green.surfaceHover,
 									},
 
 									"& .MuiMenuItem-root.Mui-selected:hover": {
-										backgroundColor: cardColors.border,
+										backgroundColor: cardColors.green.border,
 									},
 								},
 							},
@@ -195,16 +195,16 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 										backgroundColor: "#fff",
 
 										"& .MuiPickersOutlinedInput-notchedOutline": {
-											borderColor: cardColors.border,
+											borderColor: cardColors.green.border,
 											borderWidth: "1.5px",
 										},
 
 										"&:hover .MuiPickersOutlinedInput-notchedOutline": {
-											borderColor: cardColors.primary,
+											borderColor: cardColors.green.primary,
 										},
 
 										"&.Mui-focused .MuiPickersOutlinedInput-notchedOutline": {
-											borderColor: `${cardColors.primary} !important`,
+											borderColor: `${cardColors.green.primary} !important`,
 											borderWidth: "2px",
 										},
 									},
@@ -214,7 +214,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 									},
 
 									"& .MuiInputLabel-root.Mui-focused": {
-										color: cardColors.primary,
+										color: cardColors.green.primary,
 									},
 
 									"& .MuiIconButton-root": {
@@ -235,7 +235,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 				sx={{
 					width: "100%",
 					borderRadius: "1rem",
-					backgroundColor: cardColors.primary,
+					backgroundColor: cardColors.green.primary,
 					color: "#fff",
 					fontSize: "1rem",
 					fontWeight: 600,
@@ -243,7 +243,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 					boxShadow: "0 4px 8px rgba(7, 150, 105, 0.2)",
 
 					"&:hover": {
-						backgroundColor: "#067F59",
+						backgroundColor: cardColors.green.buttonHover,
 						boxShadow: "0 6px 12px rgba(7, 150, 105, 0.25)",
 					},
 

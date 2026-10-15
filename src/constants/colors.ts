@@ -26,11 +26,22 @@ export const statusBorderColors = {
 };
 
 export const cardColors = {
-	primary: "#079669",
-	background: "#F3FEF9",
-	border: "#ACF3D2",
-	surface: "#FFFFFF",
-	surfaceHover: "#EAFDF4",
+	green: {
+		primary: "#079669",
+		background: "#F3FEF9",
+		border: "#ACF3D2",
+		surface: "#FFFFFF",
+		surfaceHover: "#EAFDF4",
+		buttonHover: "#067F59",
+	},
+	blue: {
+		primary: "#2782AD",
+		background: "#F1F8FC",
+		border: "#B7D9EA",
+		surface: "#FFFFFF",
+		surfaceHover: "#E5F2F9",
+		buttonHover: "#1F6B8A",
+	},
 };
 
 export const detailTextColors = {
