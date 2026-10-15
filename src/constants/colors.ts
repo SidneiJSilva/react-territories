@@ -24,3 +24,17 @@ export const statusBorderColors = {
 	delayed: "#e9a18f",
 	available: "#8bd8b9",
 };
+
+export const cardColors = {
+	primary: "#079669",
+	background: "#F3FEF9",
+	border: "#ACF3D2",
+	surface: "#FFFFFF",
+	surfaceHover: "#EAFDF4",
+};
+
+export const detailTextColors = {
+	primary: "#334155",
+	secondary: "#64748B",
+	tertiary: "#94A3B8",
+};

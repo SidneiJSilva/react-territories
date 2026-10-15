@@ -1,7 +1,7 @@
 import { Box, DialogTitle, Typography, IconButton } from "@mui/material";
 import { Link as LinkIcon } from "@mui/icons-material";
 import type { TerritoryDetails } from "@/interfaces";
-import { statusColors } from "@/constants/colors";
+import { statusColors, detailTextColors } from "@/constants/colors";
 
 export default function TerritoryDialogHeader({
 	data,
@@ -65,7 +65,7 @@ export default function TerritoryDialogHeader({
 						<Typography
 							variant="caption"
 							component="div"
-							sx={{ color: "#898888fb", lineHeight: 1.2 }}
+							sx={{ color: detailTextColors.tertiary, lineHeight: 1.2 }}
 						>
 							{data.territory_type}
 						</Typography>
