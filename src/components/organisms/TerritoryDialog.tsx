@@ -13,6 +13,11 @@ import TerritoryAssign from "../molecules/TerritoryAssign";
 import TerritorySync from "../molecules/TerritorySync";
 import TerritoryComments from "./TerritoryComments";
 import { Box, Typography } from "@mui/material";
+import {
+	statusColors,
+	statusBgColors,
+	statusBorderColors,
+} from "@/constants/colors";
 
 import { useTerritories } from "@/hooks";
 import { useDialogStore } from "@/stores/dialogStore";
@@ -67,7 +72,7 @@ export default function TerritoryDialog() {
 			<TerritoryDialogHeader data={data} />
 
 			<DialogContent
-				sx={{ display: "flex", flexDirection: "column", gap: 4 }}
+				sx={{ display: "flex", flexDirection: "column", gap: 2 }}
 				dividers
 			>
 				{data.status === "available" ? (
@@ -106,14 +111,29 @@ export default function TerritoryDialog() {
 								REMOVER?
 							</Typography>
 
-							<Button size="small" onClick={cancelDelete}>
+							<Button
+								variant="outlined"
+								size="small"
+								sx={{
+									color: statusColors["common"],
+									backgroundColor: statusBgColors["common"],
+									borderColor: statusBorderColors["common"],
+									borderRadius: ".5rem",
+								}}
+								onClick={cancelDelete}
+							>
 								Cancelar
 							</Button>
 
 							<Button
-								color="error"
+								variant="outlined"
 								size="small"
-								variant="contained"
+								sx={{
+									color: statusColors["delayed"],
+									backgroundColor: statusBgColors["delayed"],
+									borderColor: statusBorderColors["delayed"],
+									borderRadius: ".5rem",
+								}}
 								onClick={deleteAssignment}
 							>
 								Confirmar
@@ -123,7 +143,19 @@ export default function TerritoryDialog() {
 						<div></div>
 					)}
 
-					<Button onClick={closeDialog}>Fechar</Button>
+					<Button
+						variant="outlined"
+						size="small"
+						sx={{
+							color: statusColors["common"],
+							backgroundColor: statusBgColors["common"],
+							borderColor: statusBorderColors["common"],
+							borderRadius: ".5rem",
+						}}
+						onClick={closeDialog}
+					>
+						Fechar
+					</Button>
 				</Box>
 			</DialogActions>
 		</Dialog>
