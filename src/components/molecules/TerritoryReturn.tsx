@@ -28,7 +28,7 @@ export default function TerritoryReturn({ data }: { data: TerritoryDetails }) {
 				flexDirection: "column",
 				gap: 2,
 				padding: 2,
-				border: "2px solid",
+				border: "1px solid",
 				backgroundColor: cardColors.blue.background,
 				borderColor: cardColors.blue.border,
 				borderRadius: "2rem",

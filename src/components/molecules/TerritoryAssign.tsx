@@ -46,7 +46,7 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 				flexDirection: "column",
 				gap: 2,
 				padding: 2,
-				border: "2px solid",
+				border: "1px solid",
 				backgroundColor: cardColors.green.background,
 				borderColor: cardColors.green.border,
 				borderRadius: "2rem",

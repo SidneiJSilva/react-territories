@@ -1,19 +1,20 @@
-// src/components/molecules/TerritoryDialogHistory.tsx
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HistoryIcon from "@mui/icons-material/History";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import IconButton from "@mui/material/IconButton";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent, {
+	timelineContentClasses,
+} from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+
 import { Box } from "@mui/material";
 
 import { format } from "date-fns";
-import { statusColors } from "@/constants/colors";
+import { detailTextColors, cardColors } from "@/constants/colors";
 
 type Assignment = {
 	assignedAt: string;
@@ -32,96 +33,125 @@ type Props = {
 	isDeleting?: boolean;
 };
 
-const headerData = [
-	{ label: "Nome", width: "40%" },
-	{ label: "Atribuído", width: "20%" },
-	{ label: "Finalizado", width: "20%" },
-];
-
 export default function TerritoryDialogHistory({
 	assignments,
 	onDelete,
 	isDeleting,
 }: Props) {
 	return (
-		<div>
-			<Box sx={{ display: "flex", gap: 1, color: statusColors.assigned }}>
-				<HistoryIcon />
-				<Typography variant="body1" fontWeight={700}>
-					Histórico
-				</Typography>
+		<Box
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				paddingTop: 2,
+				paddingLeft: 2,
+				paddingRight: 2,
+				borderRadius: "2rem",
+				border: "1px solid",
+				backgroundColor: cardColors.gray.background,
+				borderColor: cardColors.gray.border,
+			}}
+		>
+			<Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						padding: "0.5rem",
+						borderRadius: ".5rem",
+						backgroundColor: cardColors.gray.primary,
+						color: "#fff",
+					}}
+				>
+					<HistoryIcon />
+				</Box>
+
+				<Box>
+					<Typography variant="body1" fontWeight={700} lineHeight={1.2}>
+						Histórico
+					</Typography>
+
+					<Typography
+						variant="caption"
+						color={detailTextColors.tertiary}
+						lineHeight={1.2}
+					>
+						10 mais recentes
+					</Typography>
+				</Box>
 			</Box>
 
 			{assignments?.length ? (
-				<TableContainer component={Paper} elevation={0}>
-					<Table size="small" aria-label="assignment history">
-						<TableHead>
-							<TableRow>
-								{headerData.map((header) => (
-									<TableCell key={header.label} sx={{ width: header.width }}>
-										<Typography variant="caption" fontWeight={700}>
-											{header.label}
-										</Typography>
-									</TableCell>
-								))}
-								<TableCell align="center" sx={{ width: "20%" }}>
-									<Typography variant="caption" fontWeight={700}>
-										Ações
-									</Typography>
-								</TableCell>
-							</TableRow>
-						</TableHead>
-
-						<TableBody>
-							{assignments.map((assignment) => (
-								<TableRow key={assignment.assignmentId}>
-									<TableCell>
+				<Timeline
+					sx={{
+						[`& .${timelineItemClasses.root}:before`]: {
+							flex: 0,
+							padding: 0,
+						},
+						[`& .${timelineContentClasses.root}`]: {
+							py: 0.5,
+						},
+						[`& .${timelineItemClasses.root}`]: {
+							minHeight: 0,
+						},
+					}}
+				>
+					{assignments.map((assignment) => (
+						<TimelineItem>
+							<TimelineSeparator>
+								<TimelineDot color="warning" />
+								<TimelineConnector />
+							</TimelineSeparator>
+							<TimelineContent>
+								<Box
+									sx={{
+										display: "flex",
+										justifyContent: "space-between",
+										alignItems: "center",
+										borderBottom: "1px solid",
+										borderColor: "divider",
+										paddingBottom: 1,
+									}}
+								>
+									<Box>
 										<Typography variant="body2">
 											{assignment.firstName} {assignment.lastName}
 										</Typography>
-									</TableCell>
-
-									<TableCell>
-										<Typography variant="body2">
-											{assignment.assignedAt
-												? format(new Date(assignment.assignedAt), "dd/MM/yyyy")
-												: "-"}
-										</Typography>
-									</TableCell>
-
-									<TableCell>
-										<Typography variant="body2">
-											{assignment.returnedAt
-												? format(new Date(assignment.returnedAt), "dd/MM/yyyy")
-												: "-"}
-										</Typography>
-									</TableCell>
-
-									<TableCell align="center">
-										<IconButton
-											disabled={isDeleting}
-											aria-label="delete"
-											color="error"
-											size="small"
-											onClick={() => onDelete?.(assignment.assignmentId)}
+										<Typography
+											variant="caption"
+											color={detailTextColors.tertiary}
 										>
-											<DeleteIcon />
-										</IconButton>
-									</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
+											{`${assignment.assignedAt ? format(new Date(assignment.assignedAt), "dd/MM/yyyy") : "-"} - ${assignment.returnedAt ? format(new Date(assignment.returnedAt), "dd/MM/yyyy") : "-"}`}
+										</Typography>
+									</Box>
+
+									<IconButton
+										disabled={isDeleting}
+										aria-label="delete"
+										color="error"
+										size="small"
+										onClick={() => onDelete?.(assignment.assignmentId)}
+									>
+										<DeleteOutlineIcon fontSize="small" />
+									</IconButton>
+								</Box>
+							</TimelineContent>
+						</TimelineItem>
+					))}
+				</Timeline>
 			) : (
 				<Box
 					sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
 				>
-					<Typography variant="body1" fontWeight={700}>
+					<Typography
+						variant="body1"
+						fontWeight={700}
+						color={detailTextColors.tertiary}
+					>
 						Sem histórico
 					</Typography>
 				</Box>
 			)}
-		</div>
+		</Box>
 	);
 }
