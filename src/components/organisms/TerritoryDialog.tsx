@@ -28,19 +28,26 @@ export default function TerritoryDialog() {
 	const { open, data, closeDialog } = useDialogStore();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [idToDelete, setIdToDelete] = useState<number | null>(null);
-	const { deleteAssignment: onDeleteAssignment } = useTerritories();
+	const [typeToDelete, setTypeToDelete] = useState<string>("");
+	const { deleteAssignment: onDeleteAssignment, deleteTerritoryComment } =
+		useTerritories();
 	const { isLoading } = territoriesStore();
 
 	if (!data) return null;
 
 	const deleteAssignment = async () => {
-		await onDeleteAssignment(idToDelete!, data.id);
+		if (typeToDelete === "history") {
+			await onDeleteAssignment(idToDelete!, data.id);
+		} else if (typeToDelete === "comments") {
+			await deleteTerritoryComment(data.id, idToDelete!);
+		}
 		setIsDeleting(false);
 	};
 
-	const askForConfirmation = (id: number) => {
+	const askForConfirmation = (id: number, type: "history" | "comments") => {
 		setIsDeleting(true);
 		setIdToDelete(id);
+		setTypeToDelete(type);
 	};
 
 	const cancelDelete = () => {
@@ -90,10 +97,10 @@ export default function TerritoryDialog() {
 
 				<TerritoryComments
 					territoryId={data.id}
+					onDelete={askForConfirmation}
 					comments={data.comments ?? []}
+					isDeleting={isDeleting}
 				/>
-
-				{!data.synced && <TerritorySync territoryId={data.id} />}
 			</DialogContent>
 
 			<DialogActions>
@@ -143,19 +150,28 @@ export default function TerritoryDialog() {
 						<div></div>
 					)}
 
-					<Button
-						variant="outlined"
-						size="small"
+					<Box
 						sx={{
-							color: statusColors["common"],
-							backgroundColor: statusBgColors["common"],
-							borderColor: statusBorderColors["common"],
-							borderRadius: ".5rem",
+							display: "flex",
+							gap: 1,
 						}}
-						onClick={closeDialog}
 					>
-						Fechar
-					</Button>
+						{!data.synced && <TerritorySync territoryId={data.id} />}
+
+						<Button
+							variant="outlined"
+							size="small"
+							sx={{
+								color: statusColors["common"],
+								backgroundColor: statusBgColors["common"],
+								borderColor: statusBorderColors["common"],
+								borderRadius: ".5rem",
+							}}
+							onClick={closeDialog}
+						>
+							Fechar
+						</Button>
+					</Box>
 				</Box>
 			</DialogActions>
 		</Dialog>

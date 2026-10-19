@@ -29,7 +29,7 @@ type Assignment = {
 
 type Props = {
 	assignments: Assignment[];
-	onDelete?: (id: number) => void;
+	onDelete?: (id: number, type: "history" | "comments") => void;
 	isDeleting?: boolean;
 };
 
@@ -130,7 +130,9 @@ export default function TerritoryDialogHistory({
 										aria-label="delete"
 										color="error"
 										size="small"
-										onClick={() => onDelete?.(assignment.assignmentId)}
+										onClick={() =>
+											onDelete?.(assignment.assignmentId, "history")
+										}
 									>
 										<DeleteOutlineIcon fontSize="small" />
 									</IconButton>

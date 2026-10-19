@@ -1,12 +1,6 @@
 import type { TerritoryDetails } from "@/interfaces";
 import { Box, Typography, Button } from "@mui/material";
-import {
-	statusColors,
-	// statusBgColors,
-	// statusBorderColors,
-	detailTextColors,
-	cardColors,
-} from "@/constants/colors";
+import { statusColors, detailTextColors, cardColors } from "@/constants/colors";
 import {
 	PersonAddAlt as PersonAddAltIcon,
 	Check as CheckIcon,
