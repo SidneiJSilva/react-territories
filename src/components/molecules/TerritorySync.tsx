@@ -1,6 +1,10 @@
 import SyncIcon from "@mui/icons-material/Sync";
-import { Box, Typography, Button } from "@mui/material";
-import { statusColors } from "@/constants/colors";
+import { Button } from "@mui/material";
+import {
+	statusColors,
+	statusBgColors,
+	statusBorderColors,
+} from "@/constants/colors";
 import { useTerritories } from "@/hooks";
 
 export default function TerritorySync({
@@ -15,25 +19,19 @@ export default function TerritorySync({
 	};
 
 	return (
-		<Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-			<Box
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					gap: 1,
-					color: statusColors.assigned,
-				}}
-			>
-				<SyncIcon />
-
-				<Typography variant="body1" fontWeight={700}>
-					Sync
-				</Typography>
-			</Box>
-
-			<Button variant="contained" onClick={handleOnClick}>
-				Sincronizado
-			</Button>
-		</Box>
+		<Button
+			variant="outlined"
+			size="small"
+			startIcon={<SyncIcon />}
+			sx={{
+				color: statusColors["delayed_soon"],
+				backgroundColor: statusBgColors["delayed_soon"],
+				borderColor: statusBorderColors["delayed_soon"],
+				borderRadius: ".5rem",
+			}}
+			onClick={handleOnClick}
+		>
+			Sync
+		</Button>
 	);
 }

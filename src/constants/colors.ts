@@ -50,6 +50,14 @@ export const cardColors = {
 		surfaceHover: "#EEF2F6",
 		buttonHover: "#475569",
 	},
+	purple: {
+		primary: "#8064A2",
+		background: "#F7F3FC",
+		border: "#DCCEF2",
+		surface: "#FFFFFF",
+		surfaceHover: "#F0E9F8",
+		buttonHover: "#6D4C91",
+	},
 };
 
 export const detailTextColors = {
