@@ -11,4 +11,8 @@ export const navigationData = [
 		label: "Mapa",
 		value: "map",
 	},
+	{
+		label: "People",
+		value: "people",
+	},
 ];
