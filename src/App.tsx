@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { Box } from "@mui/material";
 import { configureApi } from "@/services/api-service";
 import TerritoryDialog from "./components/organisms/TerritoryDialog";
+import PeopleDialog from "./components/organisms/PeopleDialog";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 
@@ -27,6 +28,7 @@ function App({ children, getToken }: AppProps) {
 		>
 			{children}
 			<TerritoryDialog />
+			<PeopleDialog />
 		</Box>
 	);
 }
