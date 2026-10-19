@@ -133,6 +133,7 @@ export default function TerritoryComments({
 					display: "flex",
 					flexDirection: "column",
 					gap: 1,
+					marginTop: comments.length ? null : 2,
 				}}
 			>
 				<TextField
@@ -218,7 +219,6 @@ export default function TerritoryComments({
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
-					marginBottom: comments.length ? null : 2,
 				}}
 			>
 				<Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
