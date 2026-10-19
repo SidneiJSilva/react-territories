@@ -70,7 +70,7 @@ export default function TerritoryComments({
 
 	const commentsComponent = (
 		<Box sx={{ display: "flex", flexDirection: "column" }}>
-			{comments?.length && (
+			{comments?.length > 0 && (
 				<Timeline
 					sx={{
 						[`& .${timelineItemClasses.root}:before`]: {
@@ -218,6 +218,7 @@ export default function TerritoryComments({
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
+					marginBottom: comments.length ? null : 2,
 				}}
 			>
 				<Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
