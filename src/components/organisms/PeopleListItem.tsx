@@ -1,20 +1,22 @@
 import SCard from "@/components/atoms/cards/SCard";
 import {
 	Box,
-	// Stack,
-	// Button,
-	// CircularProgress,
 	IconButton,
 	FormControlLabel,
 	Switch,
 	Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import {
+	Edit as EditIcon,
+	Cancel as CancelIcon,
+	Save as SaveIcon,
+} from "@mui/icons-material";
 
 import { cardColors } from "@/constants/colors";
 import type { PeopleInterface } from "@/interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDialogStore } from "@/stores/dialogStore";
+import { statusBgColors, statusColors } from "@/constants/colors";
 
 export default function PeopleListItem({
 	person,
@@ -28,6 +30,24 @@ export default function PeopleListItem({
 	const [regularPioneer, setRegularPioneer] = useState(person.regularpionner);
 	const [techSkills, setTechSkills] = useState(person.techskills);
 	const [tpApproved, setTpApproved] = useState(person.tpapproved);
+
+	useEffect(() => {
+		setActive(person.active);
+		setRegularPioneer(person.regularpionner);
+		setTechSkills(person.techskills);
+		setTpApproved(person.tpapproved);
+	}, [
+		person.active,
+		person.regularpionner,
+		person.techskills,
+		person.tpapproved,
+	]);
+
+	const hasChanges =
+		active !== person.active ||
+		regularPioneer !== person.regularpionner ||
+		techSkills !== person.techskills ||
+		tpApproved !== person.tpapproved;
 
 	const handleClick = () => {
 		openPersonDialog(person);
@@ -119,9 +139,45 @@ export default function PeopleListItem({
 					</Typography>
 				</Box>
 
-				<IconButton aria-label="delete" size="small">
-					<EditIcon fontSize="small" />
-				</IconButton>
+				{!hasChanges ? (
+					<Box
+						sx={{
+							backgroundColor: statusBgColors["available"],
+							borderRadius: ".5rem",
+						}}
+					>
+						<IconButton size="small" sx={{ color: statusColors["available"] }}>
+							<EditIcon fontSize="small" />
+						</IconButton>
+					</Box>
+				) : (
+					<Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+						<Box
+							sx={{
+								backgroundColor: statusBgColors["delayed"],
+								borderRadius: ".5rem",
+							}}
+						>
+							<IconButton size="small" sx={{ color: statusColors["delayed"] }}>
+								<CancelIcon fontSize="small" />
+							</IconButton>
+						</Box>
+
+						<Box
+							sx={{
+								backgroundColor: statusBgColors["available"],
+								borderRadius: ".5rem",
+							}}
+						>
+							<IconButton
+								size="small"
+								sx={{ color: statusColors["available"] }}
+							>
+								<SaveIcon fontSize="small" />
+							</IconButton>
+						</Box>
+					</Box>
+				)}
 			</Box>
 
 			<Box

@@ -4,7 +4,7 @@ import PeopleListItem from "./PeopleListItem";
 import { peopleStore } from "@/stores/peopleStore";
 
 export default function PeopleList() {
-	const { people } = peopleStore();
+	const { peopleList } = peopleStore();
 
 	return (
 		<Box
@@ -18,7 +18,7 @@ export default function PeopleList() {
 				gap: "1rem",
 			}}
 		>
-			{people.map((person) => (
+			{peopleList.map((person) => (
 				<PeopleListItem person={person} />
 			))}
 		</Box>
