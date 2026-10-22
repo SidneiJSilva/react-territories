@@ -20,9 +20,12 @@ import {
 	detailTextColors,
 	cardColors,
 } from "@/constants/colors";
+import { usePeople } from "@/hooks";
+import type { PeopleInterface } from "@/interfaces";
 
 export default function TerritoryDialog() {
 	const { openPerson, dataPerson, closePersonDialog } = useDialogStore();
+	const { updatePerson } = usePeople();
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [firstName, setFirstName] = useState("");
@@ -33,9 +36,35 @@ export default function TerritoryDialog() {
 		setLastName(dataPerson?.lastname ?? "");
 	}, [dataPerson]);
 
-	const handleSave = () => {
-		setIsLoading(false);
-		console.log(dataPerson);
+	const handleSave = async () => {
+		setIsLoading(true);
+		const personToUpdate = getPersonToUpdate();
+
+		if (!dataPerson?.peopleid) return;
+
+		try {
+			await updatePerson(dataPerson.peopleid, personToUpdate);
+		} finally {
+			setIsLoading(false);
+			closePersonDialog();
+		}
+	};
+
+	const hasChanges =
+		firstName !== dataPerson?.firstname || lastName !== dataPerson?.lastname;
+
+	const getPersonToUpdate = () => {
+		const personToUpdate: Partial<PeopleInterface> = {};
+
+		if (firstName !== dataPerson?.firstname) {
+			personToUpdate.firstname = firstName;
+		}
+
+		if (lastName !== dataPerson?.lastname) {
+			personToUpdate.lastname = lastName;
+		}
+
+		return personToUpdate as PeopleInterface;
 	};
 
 	return (
@@ -198,19 +227,21 @@ export default function TerritoryDialog() {
 				</DialogContent>
 
 				<DialogActions>
-					<Button
-						variant="outlined"
-						size="small"
-						sx={{
-							color: statusColors["available"],
-							backgroundColor: statusBgColors["available"],
-							borderColor: statusBorderColors["available"],
-							borderRadius: ".5rem",
-						}}
-						onClick={handleSave}
-					>
-						Salvar
-					</Button>
+					{hasChanges && (
+						<Button
+							variant="outlined"
+							size="small"
+							sx={{
+								color: statusColors["available"],
+								backgroundColor: statusBgColors["available"],
+								borderColor: statusBorderColors["available"],
+								borderRadius: ".5rem",
+							}}
+							onClick={handleSave}
+						>
+							Salvar
+						</Button>
+					)}
 
 					<Button
 						variant="outlined"

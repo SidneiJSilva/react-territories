@@ -24,4 +24,23 @@ export class PeopleService {
 
 		return response.json();
 	}
+
+	static async updatePerson(personId: number, person: PeopleInterface) {
+		const response = await apiFetch(
+			`${import.meta.env.VITE_API_URL}/people/${personId}`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ ...person }),
+			},
+		);
+
+		if (!response.ok) {
+			throw new Error(`Error fetching people: ${response.status}`);
+		}
+
+		return response.json();
+	}
 }

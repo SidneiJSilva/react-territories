@@ -9,6 +9,7 @@ export interface PeopleInterface {
 	regularpionner: boolean;
 	techskills: boolean;
 	tpapproved: boolean;
+	id?: number;
 }
 
 export interface PersonTerritories {

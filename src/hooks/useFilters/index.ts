@@ -1,8 +1,9 @@
 import { territoriesStore } from "@/stores/territoriesStore";
 import { peopleStore } from "@/stores/peopleStore";
-import {
-	type TerritoryInterface,
-	type GroupedTerritoryArea,
+import type {
+	TerritoryInterface,
+	GroupedTerritoryArea,
+	PeopleInterface,
 } from "@/interfaces";
 import { Filter } from "@/constants/filters";
 
@@ -120,8 +121,10 @@ export const useFilters = () => {
 	const applyPeoplePageFilter = (
 		filterActive: string,
 		filterOther: string[],
+		peopleList?: PeopleInterface[],
 	) => {
-		let filteredPeople = [...people];
+		// change done because update person need to pass the list by itself
+		let filteredPeople = peopleList ? [...peopleList] : [...people];
 
 		// Filter by active status
 		if (filterActive !== "all") {

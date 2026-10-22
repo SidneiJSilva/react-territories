@@ -5,6 +5,7 @@ import {
 	FormControlLabel,
 	Switch,
 	Typography,
+	CircularProgress,
 } from "@mui/material";
 import {
 	Edit as EditIcon,
@@ -17,6 +18,7 @@ import type { PeopleInterface } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { useDialogStore } from "@/stores/dialogStore";
 import { statusBgColors, statusColors } from "@/constants/colors";
+import { usePeople } from "@/hooks";
 
 export default function PeopleListItem({
 	person,
@@ -24,12 +26,14 @@ export default function PeopleListItem({
 	person: PeopleInterface;
 }) {
 	const { openPersonDialog } = useDialogStore();
+	const { updatePerson } = usePeople();
 	const genderColors =
 		person.gender === "male" ? cardColors.male : cardColors.female;
 	const [active, setActive] = useState(person.active);
 	const [regularPioneer, setRegularPioneer] = useState(person.regularpionner);
 	const [techSkills, setTechSkills] = useState(person.techskills);
 	const [tpApproved, setTpApproved] = useState(person.tpapproved);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		setActive(person.active);
@@ -59,22 +63,48 @@ export default function PeopleListItem({
 
 	const handleActive = (act: boolean) => {
 		setActive(act);
-		console.log(act);
 	};
 
 	const handleRegularPioneer = (regPio: boolean) => {
 		setRegularPioneer(regPio);
-		console.log(regPio);
 	};
 
 	const handleTechSkills = (tecSk: boolean) => {
 		setTechSkills(tecSk);
-		console.log(tecSk);
 	};
 
 	const handleTpApproved = (tpApp: boolean) => {
 		setTpApproved(tpApp);
-		console.log(tpApp);
+	};
+
+	const handleSave = async () => {
+		setIsLoading(true);
+		const personToUpdate = getPersonToUpdate();
+
+		try {
+			await updatePerson(person.peopleid, personToUpdate);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const getPersonToUpdate = () => {
+		const personToUpdate: Partial<PeopleInterface> = {};
+
+		if (active !== person.active) {
+			personToUpdate.active = active;
+		}
+		if (regularPioneer !== person.regularpionner) {
+			personToUpdate.regularpionner = regularPioneer;
+		}
+		if (techSkills !== person.techskills) {
+			personToUpdate.techskills = techSkills;
+		}
+		if (tpApproved !== person.tpapproved) {
+			personToUpdate.tpapproved = tpApproved;
+		}
+
+		return personToUpdate as PeopleInterface;
 	};
 
 	return (
@@ -98,6 +128,26 @@ export default function PeopleListItem({
 				userSelect: "none",
 			}}
 		>
+			{isLoading && (
+				<Box
+					sx={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						bgcolor: "rgba(255,255,255,0.6)",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						borderRadius: "1rem",
+						zIndex: 10,
+					}}
+				>
+					<CircularProgress size={40} />
+				</Box>
+			)}
+
 			<Box
 				sx={{
 					display: "flex",
@@ -172,6 +222,10 @@ export default function PeopleListItem({
 							<IconButton
 								size="small"
 								sx={{ color: statusColors["available"] }}
+								onClick={(evt) => {
+									evt.stopPropagation();
+									handleSave();
+								}}
 							>
 								<SaveIcon fontSize="small" />
 							</IconButton>
