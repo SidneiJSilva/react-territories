@@ -77,6 +77,13 @@ export default function PeopleListItem({
 		setTpApproved(tpApp);
 	};
 
+	const handleCancel = () => {
+		setActive(person.active);
+		setRegularPioneer(person.regularpionner);
+		setTechSkills(person.techskills);
+		setTpApproved(person.tpapproved);
+	};
+
 	const handleSave = async () => {
 		setIsLoading(true);
 		const personToUpdate = getPersonToUpdate();
@@ -208,7 +215,14 @@ export default function PeopleListItem({
 								borderRadius: ".5rem",
 							}}
 						>
-							<IconButton size="small" sx={{ color: statusColors["delayed"] }}>
+							<IconButton
+								size="small"
+								sx={{ color: statusColors["delayed"] }}
+								onClick={(evt) => {
+									evt.stopPropagation();
+									handleCancel();
+								}}
+							>
 								<CancelIcon fontSize="small" />
 							</IconButton>
 						</Box>
