@@ -4,6 +4,12 @@ export interface PeopleInterface {
 	lastname: string;
 	fullname?: string;
 	active: boolean;
+	gender: string;
+	genderid: string;
+	regularpionner: boolean;
+	techskills: boolean;
+	tpapproved: boolean;
+	id?: number;
 }
 
 export interface PersonTerritories {

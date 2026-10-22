@@ -58,6 +58,22 @@ export const cardColors = {
 		surfaceHover: "#F0E9F8",
 		buttonHover: "#6D4C91",
 	},
+	male: {
+		primary: "#3985B8",
+		background: "#F0F7FC",
+		border: "#B8D9EE",
+		surface: "#FFFFFF",
+		surfaceHover: "#E3F1FA",
+		buttonHover: "#286B98",
+	},
+	female: {
+		primary: "#D66B91",
+		background: "#FDF2F6",
+		border: "#F2C4D5",
+		surface: "#FFFFFF",
+		surfaceHover: "#FBE5ED",
+		buttonHover: "#B94F76",
+	},
 };
 
 export const detailTextColors = {

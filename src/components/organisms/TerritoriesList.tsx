@@ -17,7 +17,7 @@ export default function TerritoriesList() {
 				flex: 1,
 				overflowY: "auto",
 				backgroundColor: "#f0f0f0",
-				padding: "2rem",
+				padding: 2,
 			}}
 		>
 			<SCard sx={{ marginBottom: "1rem" }}>

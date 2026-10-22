@@ -4,6 +4,7 @@ import TerritoriesGroup from "@/components/organisms/TerritoriesGroup";
 import LoadingFullScreen from "@/components/atoms/LoadingFullScreen";
 import Header from "@/components/organisms/Header";
 import Map from "@/components/organisms/Map";
+import People from "@/pages/people/People";
 
 import { useEffect } from "react";
 import { useTerritories, usePeople } from "@/hooks";
@@ -40,7 +41,7 @@ export default function Territories() {
 					<Box
 						sx={{
 							backgroundColor: "#fff",
-							padding: "1rem 2rem",
+							padding: 2,
 							boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
 							zIndex: 10,
 							position: "sticky",
@@ -54,8 +55,10 @@ export default function Territories() {
 						<TerritoriesList />
 					) : actualPage === "group" ? (
 						<TerritoriesGroup />
-					) : (
+					) : actualPage === "map" ? (
 						<Map />
+					) : (
+						<People />
 					)}
 				</Box>
 			)}
