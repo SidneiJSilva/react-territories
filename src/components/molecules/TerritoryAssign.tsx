@@ -164,11 +164,14 @@ export default function TerritoryAssign({ data }: { data: TerritoryDetails }) {
 							},
 						}}
 					>
-						{people.map((person) => (
-							<MenuItem key={person.peopleid} value={person.peopleid}>
-								{person.fullname}
-							</MenuItem>
-						))}
+						{people.map(
+							(person) =>
+								person.active && (
+									<MenuItem key={person.peopleid} value={person.peopleid}>
+										{person.fullname}
+									</MenuItem>
+								),
+						)}
 					</Select>
 				</FormControl>
 
